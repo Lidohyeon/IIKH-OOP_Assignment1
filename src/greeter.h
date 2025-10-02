@@ -3,17 +3,34 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include "Date.h"
 
 class Greeter
 {
 private:
     std::vector<std::string> data; // 데이터를 저장할 벡터
+    std::vector<Date> schedules;   // 일정을 저장할 벡터
 
 public:
     // 생성자
     Greeter()
     {
+        showWelcome();
         showMenu();
+    }
+
+    // 환영 메시지 표시 함수 (IIKH 큰 글씨)
+    void showWelcome()
+    {
+        std::cout << "\n";
+        std::cout << "██╗██╗██╗██╗  ██╗██╗  ██╗" << std::endl;
+        std::cout << "██║██║██║██║ ██╔╝██║  ██║" << std::endl;
+        std::cout << "██║██║██║█████╔╝ ███████║" << std::endl;
+        std::cout << "██║██║██║██╔═██╗ ██╔══██║" << std::endl;
+        std::cout << "██║██║██║██║  ██╗██║  ██║" << std::endl;
+        std::cout << "╚═╝╚═╝╚═╝╚═╝  ╚═╝╚═╝  ╚═╝" << std::endl;
+        std::cout << "\nWelcome to IIKH Data Management System!" << std::endl;
+        std::cout << "=========================================" << std::endl;
     }
 
     // 메뉴 표시 함수
@@ -23,12 +40,14 @@ public:
 
         while (true)
         {
-            std::cout << "\n===== 메뉴 선택 =====" << std::endl;
+            std::cout << "\n===== Menu Selection =====" << std::endl;
             std::cout << "1. Search" << std::endl;
             std::cout << "2. Insert" << std::endl;
             std::cout << "3. Delete" << std::endl;
-            std::cout << "4. Exit" << std::endl;
-            std::cout << "선택하세요: ";
+            std::cout << "4. Recommendation" << std::endl;
+            std::cout << "5. Schedule Management" << std::endl;
+            std::cout << "6. Exit" << std::endl;
+            std::cout << "Please select: ";
 
             std::cin >> choice;
 
@@ -44,10 +63,16 @@ public:
                 deleteData();
                 break;
             case 4:
-                std::cout << "프로그램을 종료합니다." << std::endl;
+                recommendData();
+                break;
+            case 5:
+                scheduleMenu();
+                break;
+            case 6:
+                std::cout << "Exiting the program. Thank you!" << std::endl;
                 return;
             default:
-                std::cout << "잘못된 선택입니다. 다시 선택해주세요." << std::endl;
+                std::cout << "Invalid selection. Please try again." << std::endl;
                 break;
             }
         }
@@ -58,12 +83,12 @@ public:
     {
         if (data.empty())
         {
-            std::cout << "저장된 데이터가 없습니다." << std::endl;
+            std::cout << "No data stored." << std::endl;
             return;
         }
 
         std::string searchTerm;
-        std::cout << "검색할 데이터를 입력하세요: ";
+        std::cout << "Enter data to search: ";
         std::cin.ignore(); // 이전 입력의 개행문자 제거
         std::getline(std::cin, searchTerm);
 
@@ -72,14 +97,14 @@ public:
         {
             if (data[i].find(searchTerm) != std::string::npos)
             {
-                std::cout << "찾은 데이터 [" << i << "]: " << data[i] << std::endl;
+                std::cout << "Found data [" << i << "]: " << data[i] << std::endl;
                 found = true;
             }
         }
 
         if (!found)
         {
-            std::cout << "'" << searchTerm << "'를 포함하는 데이터를 찾을 수 없습니다." << std::endl;
+            std::cout << "No data containing '" << searchTerm << "' was found." << std::endl;
         }
     }
 
@@ -87,13 +112,13 @@ public:
     void insertData()
     {
         std::string newData;
-        std::cout << "추가할 데이터를 입력하세요: ";
+        std::cout << "Enter data to add: ";
         std::cin.ignore(); // 이전 입력의 개행문자 제거
         std::getline(std::cin, newData);
 
         data.push_back(newData);
-        std::cout << "데이터가 성공적으로 추가되었습니다." << std::endl;
-        std::cout << "현재 저장된 데이터 개수: " << data.size() << std::endl;
+        std::cout << "Data added successfully." << std::endl;
+        std::cout << "Current number of stored data: " << data.size() << std::endl;
     }
 
     // 데이터 삭제 함수
@@ -101,36 +126,140 @@ public:
     {
         if (data.empty())
         {
-            std::cout << "삭제할 데이터가 없습니다." << std::endl;
+            std::cout << "No data to delete." << std::endl;
             return;
         }
 
         // 현재 저장된 데이터 목록 표시
-        std::cout << "현재 저장된 데이터:" << std::endl;
+        std::cout << "Currently stored data:" << std::endl;
         for (size_t i = 0; i < data.size(); i++)
         {
             std::cout << "[" << i << "] " << data[i] << std::endl;
         }
 
         int index;
-        std::cout << "삭제할 데이터의 인덱스를 입력하세요: ";
+        std::cout << "Enter index of data to delete: ";
         std::cin >> index;
 
         if (index >= 0 && index < static_cast<int>(data.size()))
         {
-            std::cout << "'" << data[index] << "'가 삭제되었습니다." << std::endl;
+            std::cout << "'" << data[index] << "' has been deleted." << std::endl;
             data.erase(data.begin() + index);
-            std::cout << "현재 저장된 데이터 개수: " << data.size() << std::endl;
+            std::cout << "Current number of stored data: " << data.size() << std::endl;
         }
         else
         {
-            std::cout << "유효하지 않은 인덱스입니다." << std::endl;
+            std::cout << "Invalid index." << std::endl;
+        }
+    }
+
+    // 추천 함수
+    void recommendData()
+    {
+        if (data.empty())
+        {
+            std::cout << "No data available for recommendation." << std::endl;
+            return;
+        }
+
+        std::cout << "\n===== Data Recommendations =====" << std::endl;
+
+        if (data.size() == 1)
+        {
+            std::cout << "Only one data available: " << data[0] << std::endl;
+        }
+        else if (data.size() <= 3)
+        {
+            std::cout << "All available data:" << std::endl;
+            for (size_t i = 0; i < data.size(); i++)
+            {
+                std::cout << "⭐ " << data[i] << std::endl;
+            }
+        }
+        else
+        {
+            std::cout << "Top 3 recommended data:" << std::endl;
+            // 랜덤하게 3개 선택하거나 처음 3개 표시
+            for (size_t i = 0; i < 3 && i < data.size(); i++)
+            {
+                std::cout << "⭐ " << data[i] << std::endl;
+            }
+            std::cout << "\nTotal " << data.size() << " data items available." << std::endl;
+        }
+    }
+
+    // 일정 확인 함수
+    void viewSchedule()
+    {
+        if (schedules.empty())
+        {
+            std::cout << "No schedules available." << std::endl;
+            return;
+        }
+
+        std::cout << "\n===== Your Schedules =====" << std::endl;
+        for (size_t i = 0; i < schedules.size(); i++)
+        {
+            std::cout << "[" << i + 1 << "] " << schedules[i].toString() << std::endl;
+        }
+        std::cout << "\nTotal schedules: " << schedules.size() << std::endl;
+    }
+
+    // 일정 추가 함수
+    void addSchedule()
+    {
+        std::string scheduleInput;
+        std::cout << "Enter new schedule (e.g., 2024-10-02 14:00 - Meeting with team): ";
+        std::cin.ignore(); // 이전 입력의 개행문자 제거
+        std::getline(std::cin, scheduleInput);
+
+        // Date 객체 생성
+        Date newSchedule(scheduleInput);
+        schedules.push_back(newSchedule);
+
+        std::cout << "Schedule added successfully!" << std::endl;
+        std::cout << "Total schedules: " << schedules.size() << std::endl;
+
+        // 방금 추가된 일정 확인
+        std::cout << "Added: " << newSchedule.toString() << std::endl;
+    }
+
+    // 일정 관리 메뉴 함수
+    void scheduleMenu()
+    {
+        int choice;
+
+        while (true)
+        {
+            std::cout << "\n===== Schedule Management =====" << std::endl;
+            std::cout << "1. View Schedules" << std::endl;
+            std::cout << "2. Add Schedule" << std::endl;
+            std::cout << "3. Back to Main Menu" << std::endl;
+            std::cout << "Please select: ";
+
+            std::cin >> choice;
+
+            switch (choice)
+            {
+            case 1:
+                viewSchedule();
+                break;
+            case 2:
+                addSchedule();
+                break;
+            case 3:
+                std::cout << "Returning to main menu..." << std::endl;
+                return;
+            default:
+                std::cout << "Invalid selection. Please try again." << std::endl;
+                break;
+            }
         }
     }
 
     // 소멸자
     ~Greeter()
     {
-        std::cout << "Greeter 객체가 소멸됩니다." << std::endl;
+        std::cout << "Greeter object is being destroyed." << std::endl;
     }
 };
