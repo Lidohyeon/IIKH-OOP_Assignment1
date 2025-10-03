@@ -4,6 +4,7 @@
 #include <string>
 #include <vector>
 #include "Date.h"
+#include "Meal.h"
 
 class Greeter
 {
@@ -46,7 +47,8 @@ public:
             std::cout << "3. Delete" << std::endl;
             std::cout << "4. Recommendation" << std::endl;
             std::cout << "5. Schedule Management" << std::endl;
-            std::cout << "6. Exit" << std::endl;
+            std::cout << "6. Meal Management " << std ::endl;
+            std::cout << "7. Exit" << std::endl;
             std::cout << "Please select: ";
 
             std::cin >> choice;
@@ -69,6 +71,9 @@ public:
                 scheduleMenu();
                 break;
             case 6:
+                mealMenu();
+                break;
+            case 7:
                 std::cout << "Exiting the program. Thank you!" << std::endl;
                 return;
             default:
@@ -256,6 +261,68 @@ public:
             }
         }
     }
+
+    //Meal 관리 메뉴 함수
+    void mealMenu()
+    {
+        cout << "/n===== Meal Management =====" << endl;
+        cout << "Select meal type (1: Breakfast, 2: Lunch, 3: Dinner): ";
+        int t; 
+        cin >> t;
+        string type = (t==1 ? "Breakfast" : (t==2 ? "Lunch" : "Dinner"));
+        Meal meal(type);
+
+        while (true)
+        {
+            cout << "/n===== " << type << " Menu =====" << endl;
+            cout << "1. Add Recipe" << endl;
+            cout << "2. Remove Recipe" <<endl;
+            cout << "3. Set Servings" << endl;
+            cout << "4. Display Meal" << endl;
+            cout << "5. Back" << endl;
+            cout << "Select: ";
+            int c;
+            cin >> c;
+
+            if (c == 1)
+            {
+                string r;
+                cout << "Enter recipe name: ";
+                cin.ignore();
+                getline(cin, r);
+                meal.addRecipe(r);
+            }
+            else if (c == 2)
+            {
+                string r;
+                cout << "Enter recipe name to remove: ";
+                cin.ignore();
+                getline(cin, r);
+                meal.removeRecipe(r);
+            }
+            else if (c == 3)
+            {
+                int s;
+                cout << "Enter servings: ";
+                cin >> s;
+                meal.setServings(s);
+            }
+            else if (c == 4)
+            {
+                meal.display();
+            }
+            else if (c == 5)
+            {
+                cout << "Returning to main menu..." << endl;
+                break;
+            }
+            else
+            {
+                cout << "Invalid choice." <<endl;
+            }
+        }
+    }
+    
 
     // 소멸자
     ~Greeter()
