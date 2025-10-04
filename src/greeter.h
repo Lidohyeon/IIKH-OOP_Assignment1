@@ -262,21 +262,21 @@ public:
         }
     }
 
-    //Meal 관리 메뉴 함수
+    // Meal 관리 메뉴 함수
     void mealMenu()
     {
         cout << "/n===== Meal Management =====" << endl;
         cout << "Select meal type (1: Breakfast, 2: Lunch, 3: Dinner): ";
-        int t; 
+        int t;
         cin >> t;
-        string type = (t==1 ? "Breakfast" : (t==2 ? "Lunch" : "Dinner"));
+        string type = (t == 1 ? "Breakfast" : (t == 2 ? "Lunch" : "Dinner"));
         Meal meal(type);
 
         while (true)
         {
             cout << "/n===== " << type << " Menu =====" << endl;
             cout << "1. Add Recipe" << endl;
-            cout << "2. Remove Recipe" <<endl;
+            cout << "2. Remove Recipe" << endl;
             cout << "3. Set Servings" << endl;
             cout << "4. Display Meal" << endl;
             cout << "5. Back" << endl;
@@ -318,11 +318,10 @@ public:
             }
             else
             {
-                cout << "Invalid choice." <<endl;
+                cout << "Invalid choice." << endl;
             }
         }
     }
-    
 
     // 소멸자
     ~Greeter()
@@ -330,3 +329,8 @@ public:
         std::cout << "Greeter object is being destroyed." << std::endl;
     }
 };
+
+// 난이도 선택 항목 추가
+//  레시피 디비에게 받은
+//  사용자의 요리 능력 (제약) 사용자의 능력을 고려해서 max difficult level을 사용자가 설정한다.
+//
