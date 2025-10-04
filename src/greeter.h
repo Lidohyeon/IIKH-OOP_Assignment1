@@ -161,36 +161,65 @@ public:
     // 추천 함수
     void recommendData()
     {
-        if (data.empty())
+        std::cout << "\n===== Recipe Recommendation =====" << std::endl;
+        std::cout << "Select your cooking difficulty level:" << std::endl;
+        std::cout << "A. Advanced (Hard recipes)" << std::endl;
+        std::cout << "B. Intermediate (Medium recipes)" << std::endl;
+        std::cout << "C. Beginner (Easy recipes)" << std::endl;
+        std::cout << "Please select (A/B/C): ";
+
+        char difficultyChoice;
+        std::cin >> difficultyChoice;
+
+        // 대소문자 통일
+        if (difficultyChoice >= 'a' && difficultyChoice <= 'c')
         {
-            std::cout << "No data available for recommendation." << std::endl;
+            difficultyChoice = difficultyChoice - 'a' + 'A';
+        }
+
+        std::string difficultyLevel;
+        std::vector<std::string> recommendedRecipes;
+
+        switch (difficultyChoice)
+        {
+        case 'A':
+            difficultyLevel = "Advanced";
+            recommendedRecipes = {
+                "⭐ Beef Wellington - Classic British dish",
+                "⭐ Homemade Ramen - Complex broth and toppings",
+                "⭐ Duck Confit - French culinary technique",
+                "⭐ Soufflé - Delicate French dessert",
+                "⭐ Sushi Rolls - Japanese precision cooking"};
+            break;
+        case 'B':
+            difficultyLevel = "Intermediate";
+            recommendedRecipes = {
+                "⭐ Pasta Carbonara - Creamy Italian classic",
+                "⭐ Chicken Stir Fry - Balanced and nutritious",
+                "⭐ Beef Bulgogi - Korean marinated beef",
+                "⭐ Fish Tacos - Fresh and flavorful",
+                "⭐ Vegetable Curry - Aromatic spices"};
+            break;
+        case 'C':
+            difficultyLevel = "Beginner";
+            recommendedRecipes = {
+                "⭐ Scrambled Eggs - Easy breakfast dish",
+                "⭐ Toast with Butter - Simple and quick",
+                "⭐ Instant Noodles - 5-minute meal",
+                "⭐ Grilled Cheese Sandwich - Classic comfort food",
+                "⭐ Fruit Salad - Healthy and refreshing"};
+            break;
+        default:
+            std::cout << "Invalid selection. Please try again." << std::endl;
             return;
         }
 
-        std::cout << "\n===== Data Recommendations =====" << std::endl;
-
-        if (data.size() == 1)
+        std::cout << "\n===== " << difficultyLevel << " Level Recommendations =====" << std::endl;
+        for (const auto &recipe : recommendedRecipes)
         {
-            std::cout << "Only one data available: " << data[0] << std::endl;
+            std::cout << recipe << std::endl;
         }
-        else if (data.size() <= 3)
-        {
-            std::cout << "All available data:" << std::endl;
-            for (size_t i = 0; i < data.size(); i++)
-            {
-                std::cout << "⭐ " << data[i] << std::endl;
-            }
-        }
-        else
-        {
-            std::cout << "Top 3 recommended data:" << std::endl;
-            // 랜덤하게 3개 선택하거나 처음 3개 표시
-            for (size_t i = 0; i < 3 && i < data.size(); i++)
-            {
-                std::cout << "⭐ " << data[i] << std::endl;
-            }
-            std::cout << "\nTotal " << data.size() << " data items available." << std::endl;
-        }
+        std::cout << "\nTotal " << recommendedRecipes.size() << " recipes recommended for " << difficultyLevel << " level." << std::endl;
     }
 
     // 일정 확인 함수
@@ -333,4 +362,4 @@ public:
 // 난이도 선택 항목 추가
 //  레시피 디비에게 받은
 //  사용자의 요리 능력 (제약) 사용자의 능력을 고려해서 max difficult level을 사용자가 설정한다.
-//
+//  입력받은 모든 max difficult level이하의 요리들을 보여주는 것.

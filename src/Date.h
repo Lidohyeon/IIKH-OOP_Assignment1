@@ -14,14 +14,15 @@ private:
     int hour;
     int minute;
     std::string description;
+    std::string recipeName;
 
 public:
     // 기본 생성자
-    Date() : year(2024), month(1), day(1), hour(0), minute(0), description("") {}
+    Date() : year(2024), month(1), day(1), hour(0), minute(0), description(""), recipeName("") {}
 
     // 매개변수 생성자
-    Date(int y, int m, int d, int h, int min, const std::string &desc = "")
-        : year(y), month(m), day(d), hour(h), minute(min), description(desc) {}
+    Date(int y, int m, int d, int h, int min, const std::string &desc = "", const std::string &recipe = "")
+        : year(y), month(m), day(d), hour(h), minute(min), description(desc), recipeName(recipe) {}
 
     // 문자열로부터 생성하는 생성자 (예: "2024-10-02 14:00 - Meeting with team")
     Date(const std::string &dateString)
@@ -38,14 +39,28 @@ public:
         day = 1;
         hour = 0;
         minute = 0;
-        description = dateString;
+        description = "";
+        recipeName = "";
 
-        // 간단한 파싱 (예: "2024-10-02 14:00 - Meeting")
-        size_t dashPos = dateString.find(" - ");
-        if (dashPos != std::string::npos)
+        // 형식: "2024-10-02 14:00 - Meeting - Recipe_name"
+        size_t firstDashPos = dateString.find(" - ");
+        if (firstDashPos != std::string::npos)
         {
-            std::string datePart = dateString.substr(0, dashPos);
-            description = dateString.substr(dashPos + 3);
+            std::string datePart = dateString.substr(0, firstDashPos);
+            std::string remainingPart = dateString.substr(firstDashPos + 3);
+
+            // 두 번째 " - "를 찾아서 description과 recipeName 분리
+            size_t secondDashPos = remainingPart.find(" - ");
+            if (secondDashPos != std::string::npos)
+            {
+                description = remainingPart.substr(0, secondDashPos);
+                recipeName = remainingPart.substr(secondDashPos + 3);
+            }
+            else
+            {
+                // 레시피 이름이 없는 경우, 전체를 description으로
+                description = remainingPart;
+            }
 
             // 날짜와 시간 파싱
             std::stringstream ss(datePart);
@@ -65,6 +80,11 @@ public:
             if (std::getline(ss, token))
                 minute = std::stoi(token);
         }
+        else
+        {
+            // " - "가 없는 경우, 전체를 description으로
+            description = dateString;
+        }
     }
 
     // Getter 함수들
@@ -74,6 +94,7 @@ public:
     int getHour() const { return hour; }
     int getMinute() const { return minute; }
     std::string getDescription() const { return description; }
+    std::string getRecipeName() const { return recipeName; }
 
     // Setter 함수들
     void setYear(int y) { year = y; }
@@ -82,6 +103,7 @@ public:
     void setHour(int h) { hour = h; }
     void setMinute(int min) { minute = min; }
     void setDescription(const std::string &desc) { description = desc; }
+    void setRecipeName(const std::string &recipe) { recipeName = recipe; }
 
     // 날짜를 문자열로 변환
     std::string toString() const
@@ -104,6 +126,11 @@ public:
         if (!description.empty())
         {
             ss << " - " << description;
+        }
+
+        if (!recipeName.empty())
+        {
+            ss << " - " << recipeName;
         }
 
         return ss.str();
