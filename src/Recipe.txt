@@ -1,0 +1,434 @@
+Recipe name: Aussie Chicken
+Recipe Procedure:
+
+Time: 0
+Ingredients: 
+Grade: A
+
+Recipe name: Garlic Butter Shrimp Pasta
+Recipe Procedure:
+Step 1: Boil pasta in salted water until al dente.
+Step 2: In a skillet, melt butter and add minced garlic.
+Step 3: Toss in shrimp, cook 2 minutes per side.
+Step 4: Mix pasta with shrimp and parsley. Serve warm.
+Time: 25
+Ingredients: 200g spaghetti, 1 lb shrimp, 3 tbsp butter, 3 cloves garlic, salt, pepper, parsley
+Grade: A
+
+Recipe name: Chicken Teriyaki Bowl
+Recipe Procedure:
+Step 1: Mix soy sauce, mirin, and sugar to make sauce.
+Step 2: Pan-fry chicken until golden brown.
+Step 3: Add sauce and simmer for 5 minutes.
+Step 4: Serve over rice with sesame seeds.
+Time: 25
+Ingredients: 2 chicken thighs, 3 tbsp soy sauce, 2 tbsp mirin, 1 tbsp sugar, 1 tsp sesame seeds, rice
+Grade: A
+
+Recipe name: Creamy Spinach Soup
+Recipe Procedure:
+Step 1: Sauté onions and garlic in butter.
+Step 2: Add spinach and vegetable broth, cook until wilted.
+Step 3: Blend until smooth and stir in cream.
+Step 4: Season with salt and pepper.
+Time: 30
+Ingredients: 2 cups spinach, 1 onion, 2 cloves garlic, 1 cup vegetable broth, ½ cup cream, butter
+Grade: B
+
+Recipe name: Thai Green Curry
+Recipe Procedure:
+Step 1: Sauté curry paste in coconut oil.
+Step 2: Add chicken, cook until browned.
+Step 3: Pour in coconut milk, add vegetables and simmer 15 minutes.
+Step 4: Garnish with basil.
+Time: 40
+Ingredients: 1 tbsp green curry paste, 2 chicken breasts, 1 can coconut milk, 1 cup mixed vegetables, basil
+Grade: C
+
+Recipe name: Vegetable Stir Fry
+Recipe Procedure:
+Step 1: Heat oil in a wok, add garlic and vegetables.
+Step 2: Stir-fry for 5 minutes, add soy sauce and sesame oil.
+Step 3: Serve with rice.
+Time: 15
+Ingredients: 2 cups mixed vegetables, 1 tbsp soy sauce, 1 tsp sesame oil, 1 clove garlic, 1 tbsp oil
+Grade: A
+
+Recipe name: Beef Stroganoff
+Recipe Procedure:
+Step 1: Sear beef strips until browned, remove.
+Step 2: Add onions and mushrooms, sauté.
+Step 3: Stir in sour cream and beef broth, add beef back.
+Step 4: Serve over noodles.
+Time: 35
+Ingredients: 300g beef, 1 onion, 1 cup mushrooms, ½ cup sour cream, ½ cup beef broth, noodles
+Grade: B
+
+Recipe name: Baked Mac and Cheese
+Recipe Procedure:
+Step 1: Cook macaroni until soft.
+Step 2: Melt butter, whisk in flour and milk for sauce.
+Step 3: Stir in cheese, mix with pasta, bake for 15 minutes.
+Time: 30
+Ingredients: 2 cups macaroni, 2 tbsp butter, 1 tbsp flour, 1 cup milk, 1 cup cheddar cheese, salt
+Grade: A
+
+Recipe name: Korean Bibimbap
+Recipe Procedure:
+Step 1: Prepare rice and assorted sautéed vegetables.
+Step 2: Fry an egg sunny-side up.
+Step 3: Place rice in bowl, arrange toppings, add gochujang.
+Step 4: Mix before eating.
+Time: 25
+Ingredients: cooked rice, spinach, carrots, mushrooms, bean sprouts, gochujang, egg, sesame oil
+Grade: B
+
+Recipe name: French Onion Soup
+Recipe Procedure:
+Step 1: Caramelize onions in butter for 30 minutes.
+Step 2: Add beef broth and thyme, simmer 20 minutes.
+Step 3: Pour into bowls, top with toasted bread and cheese, broil until melted.
+Time: 60
+Ingredients: 3 onions, 3 cups beef broth, 1 tsp thyme, 2 slices baguette, ½ cup gruyere cheese, butter
+Grade: C
+
+Recipe name: Tuna Avocado Salad
+Recipe Procedure:
+Step 1: Mix drained tuna with diced avocado, onion, and lemon juice.
+Step 2: Add olive oil, salt, and pepper.
+Step 3: Serve chilled on toast or greens.
+Time: 10
+Ingredients: 1 can tuna, 1 avocado, ¼ onion, 1 tsp lemon juice, 1 tbsp olive oil, salt, pepper
+Grade: A
+
+Recipe name: Mushroom Risotto
+Recipe Procedure:
+Step 1: Heat butter in a large pan, sauté onions and mushrooms until soft.
+Step 2: Add rice, toast lightly, then pour in white wine and stir until absorbed.
+Step 3: Gradually add hot broth, stirring constantly until creamy.
+Step 4: Finish with parmesan and parsley.
+Time: 45
+Ingredients: 1 cup arborio rice, 1 cup mushrooms, 1 onion, ¼ cup white wine, 3 cups broth, 2 tbsp butter, parmesan
+Grade: A
+
+Recipe name: Moroccan Lamb Tagine
+Recipe Procedure:
+Step 1: Sear lamb cubes with spices until browned.
+Step 2: Add onions, garlic, and tomatoes, then simmer with broth for 1 hour.
+Step 3: Add apricots and almonds, cook 15 more minutes.
+Step 4: Serve with couscous.
+Time: 90
+Ingredients: 1 lb lamb, 1 onion, 2 tomatoes, 1 cup broth, ¼ cup apricots, almonds, cumin, cinnamon
+Grade: A
+
+Recipe name: Seafood Bouillabaisse
+Recipe Procedure:
+Step 1: Sauté onion, leek, and garlic in olive oil.
+Step 2: Add tomato paste, white wine, and fish stock.
+Step 3: Add mussels, shrimp, and fish pieces. Simmer until seafood is cooked.
+Step 4: Serve with crusty bread.
+Time: 70
+Ingredients: ½ lb shrimp, ½ lb mussels, ½ lb white fish, 1 leek, 1 onion, 2 cups fish stock, ½ cup white wine
+Grade: A
+
+Recipe name: Braised Short Ribs
+Recipe Procedure:
+Step 1: Season short ribs and brown on all sides.
+Step 2: Add onions, carrots, red wine, and beef broth.
+Step 3: Cover and braise in oven at 325°F (160°C) for 2½ hours.
+Step 4: Serve with mashed potatoes.
+Time: 150
+Ingredients: 2 lbs beef ribs, 1 onion, 2 carrots, 1 cup red wine, 2 cups broth, thyme, salt, pepper
+Grade: A
+
+Recipe name: Duck Confit
+Recipe Procedure:
+Step 1: Salt duck legs overnight with garlic and thyme.
+Step 2: Rinse and cook slowly submerged in duck fat for 3 hours.
+Step 3: Crisp skin in oven before serving.
+Time: 180
+Ingredients: 2 duck legs, 2 cups duck fat, garlic, thyme, salt, pepper
+Grade: A
+
+Recipe name: Chicken Alfredo Pasta
+Recipe Procedure:
+Step 1: Cook pasta until al dente.
+Step 2: In a pan, cook chicken until golden.
+Step 3: Add cream, butter, and parmesan; toss pasta in sauce.
+Time: 25
+Ingredients: 200g pasta, 1 chicken breast, ½ cup cream, 1 tbsp butter, ¼ cup parmesan, garlic
+Grade: B
+
+Recipe name: Korean Bulgogi
+Recipe Procedure:
+Step 1: Marinate beef in soy sauce, sugar, garlic, and sesame oil for 30 minutes.
+Step 2: Grill or pan-fry over high heat until caramelized.
+Step 3: Serve with rice and kimchi.
+Time: 35
+Ingredients: ½ lb beef, 2 tbsp soy sauce, 1 tbsp sugar, 1 tbsp sesame oil, garlic, pepper
+Grade: B
+
+Recipe name: Chicken Curry
+Recipe Procedure:
+Step 1: Sauté onions, garlic, and curry powder.
+Step 2: Add chicken and cook until browned.
+Step 3: Stir in coconut milk and simmer 20 minutes.
+Time: 40
+Ingredients: 2 chicken breasts, 1 onion, 1 cup coconut milk, 1 tbsp curry powder, salt, pepper
+Grade: B
+
+Recipe name: Creamy Tomato Penne
+Recipe Procedure:
+Step 1: Cook penne in salted water.
+Step 2: Sauté garlic and tomato paste, add cream.
+Step 3: Mix with pasta and sprinkle cheese.
+Time: 20
+Ingredients: 200g penne, 1 tbsp tomato paste, ½ cup cream, garlic, salt, pepper, cheese
+Grade: B
+
+Recipe name: Teriyaki Salmon
+Recipe Procedure:
+Step 1: Combine soy sauce, sugar, and mirin to make sauce.
+Step 2: Marinate salmon for 20 minutes.
+Step 3: Bake or grill 10 minutes, brush with remaining sauce.
+Time: 30
+Ingredients: 2 salmon fillets, 2 tbsp soy sauce, 1 tbsp sugar, 1 tbsp mirin, sesame seeds
+Grade: B
+
+Recipe name: Grilled Cheese Sandwich
+Recipe Procedure:
+Step 1: Butter bread slices and place cheese between them.
+Step 2: Cook on skillet until golden and melted.
+Time: 10
+Ingredients: 2 slices bread, 2 slices cheese, 1 tbsp butter
+Grade: C
+
+Recipe name: Scrambled Eggs
+Recipe Procedure:
+Step 1: Beat eggs with salt and milk.
+Step 2: Cook slowly in butter until creamy.
+Time: 7
+Ingredients: 2 eggs, 1 tbsp milk, 1 tsp butter, salt
+Grade: C
+
+Recipe name: Greek Salad
+Recipe Procedure:
+Step 1: Chop vegetables and mix with olive oil and vinegar.
+Step 2: Add feta and olives before serving.
+Time: 10
+Ingredients: cucumber, tomato, onion, feta, olives, olive oil, vinegar
+Grade: C
+
+Recipe name: Banana Smoothie
+Recipe Procedure:
+Step 1: Blend banana, milk, and honey until smooth.
+Step 2: Pour into glass and top with ice cubes.
+Time: 5
+Ingredients: 1 banana, 1 cup milk, 1 tsp honey, ice
+Grade: C
+
+Recipe name: Peanut Butter Cookies
+Recipe Procedure:
+Step 1: Mix peanut butter, sugar, and egg.
+Step 2: Scoop onto tray and bake 10 minutes.
+Time: 15
+Ingredients: 1 cup peanut butter, ½ cup sugar, 1 egg
+Grade: C
+
+Recipe name: Tuna Sandwich
+Recipe Procedure:
+Step 1: Mix tuna, mayo, and lemon juice.
+Step 2: Spread on bread and serve with lettuce.
+Time: 8
+Ingredients: 1 can tuna, 2 tbsp mayo, 1 tsp lemon juice, 2 slices bread
+Grade: C
+
+Recipe name: Egg Fried Rice
+Recipe Procedure:
+Step 1: Heat oil, fry garlic and vegetables.
+Step 2: Add rice, soy sauce, and scrambled egg.
+Time: 15
+Ingredients: 1 cup rice, 1 egg, ½ cup vegetables, soy sauce, oil
+Grade: C
+
+Recipe name: Caprese Salad
+Recipe Procedure:
+Step 1: Slice tomato and mozzarella, arrange alternately.
+Step 2: Drizzle with olive oil and balsamic vinegar.
+Time: 8
+Ingredients: 1 tomato, mozzarella cheese, basil, olive oil, balsamic vinegar
+Grade: C
+
+Recipe name: Pancakes
+Recipe Procedure:
+Step 1: Mix flour, sugar, baking powder, milk, and egg.
+Step 2: Cook on griddle until bubbles form, flip and cook 1 minute more.
+Time: 15
+Ingredients: 1 cup flour, 1 tbsp sugar, 1 tsp baking powder, 1 cup milk, 1 egg
+Grade: C
+
+Recipe name: Garlic Toast
+Recipe Procedure:
+Step 1: Mix butter with minced garlic.
+Step 2: Spread on bread and bake until crisp.
+Time: 10
+Ingredients: 2 slices bread, 1 tbsp butter, 1 clove garlic
+Grade: C
+
+Recipe name: Roasted Turkey
+Recipe Procedure:
+Step 1: Preheat oven to 350°F (175°C). Season turkey with salt, pepper, and herbs.
+Step 2: Roast for 3 hours, basting every 30 minutes.
+Step 3: Rest before carving.
+Time: 180
+Ingredients: 1 turkey, salt, pepper, herbs, butter
+Grade: A
+
+Recipe name: Ratatouille
+Recipe Procedure:
+Step 1: Slice vegetables thinly.
+Step 2: Layer in dish with tomato sauce.
+Step 3: Bake at 375°F (190°C) for 45 minutes.
+Time: 60
+Ingredients: zucchini, eggplant, tomato, onion, bell pepper, olive oil, herbs
+Grade: B
+
+Recipe name: Garlic Mashed Potatoes
+Recipe Procedure:
+Step 1: Boil potatoes until tender.
+Step 2: Mash with butter, cream, and garlic.
+Step 3: Season and serve hot.
+Time: 25
+Ingredients: 4 potatoes, 2 tbsp butter, ¼ cup cream, 2 cloves garlic
+Grade: B
+
+Recipe name: Caesar Salad
+Recipe Procedure:
+Step 1: Toss lettuce with dressing and croutons.
+Step 2: Top with parmesan cheese.
+Time: 10
+Ingredients: romaine lettuce, Caesar dressing, croutons, parmesan
+Grade: C
+
+Recipe name: Shrimp Alfredo
+Recipe Procedure:
+Step 1: Cook shrimp in butter.
+Step 2: Add cream and parmesan. Toss with fettuccine.
+Time: 30
+Ingredients: 200g fettuccine, ½ lb shrimp, ½ cup cream, ¼ cup parmesan, butter
+Grade: B
+
+Recipe name: BBQ Ribs
+Recipe Procedure:
+Step 1: Rub ribs with spices.
+Step 2: Bake at low heat for 2 hours.
+Step 3: Brush with BBQ sauce and broil 10 minutes.
+Time: 150
+Ingredients: 1 rack pork ribs, BBQ sauce, paprika, garlic powder, salt
+Grade: A
+
+Recipe name: Clam Chowder
+Recipe Procedure:
+Step 1: Sauté bacon, onions, and celery.
+Step 2: Add clams, potatoes, broth, and cream. Simmer 25 minutes.
+Time: 40
+Ingredients: 1 can clams, 2 potatoes, 2 cups broth, ½ cup cream, 2 strips bacon
+Grade: B
+
+Recipe name: Oatmeal Cookies
+Recipe Procedure:
+Step 1: Mix butter, sugar, eggs, and oats.
+Step 2: Drop onto baking sheet, bake at 350°F for 10 minutes.
+Time: 20
+Ingredients: 1 cup oats, ½ cup butter, ½ cup sugar, 1 egg, flour
+Grade: C
+
+Recipe name: Lasagna
+Recipe Procedure:
+Step 1: Layer pasta sheets with meat sauce and cheese.
+Step 2: Bake for 45 minutes until bubbling.
+Time: 70
+Ingredients: 6 lasagna sheets, ½ lb beef, 1 cup tomato sauce, mozzarella, ricotta, herbs
+Grade: A
+
+Recipe name: Pesto Pasta
+Recipe Procedure:
+Step 1: Blend basil, garlic, pine nuts, and olive oil into pesto.
+Step 2: Toss with cooked pasta and parmesan.
+Time: 20
+Ingredients: 200g pasta, 1 cup basil, 2 cloves garlic, 2 tbsp olive oil, 1 tbsp pine nuts, parmesan
+Grade: B
+
+Recipe name: Vegetable Soup
+Recipe Procedure:
+Step 1: Sauté onions and carrots.
+Step 2: Add broth, potatoes, and cabbage. Simmer 25 minutes.
+Time: 35
+Ingredients: onion, carrot, potato, cabbage, broth, salt, pepper
+Grade: C
+
+Recipe name: Roast Beef
+Recipe Procedure:
+Step 1: Season beef with salt and pepper.
+Step 2: Roast at 400°F for 45 minutes.
+Step 3: Rest before slicing.
+Time: 70
+Ingredients: 2 lbs beef, salt, pepper, garlic, rosemary
+Grade: A
+
+Recipe name: Chicken Noodle Soup
+Recipe Procedure:
+Step 1: Boil chicken with onions, garlic, and celery.
+Step 2: Add noodles and cook 10 minutes more.
+Time: 40
+Ingredients: 1 chicken breast, 1 carrot, 1 celery stalk, 1 cup noodles, broth
+Grade: B
+
+Recipe name: Avocado Toast
+Recipe Procedure:
+Step 1: Mash avocado with lemon juice and salt.
+Step 2: Spread on toasted bread, top with egg if desired.
+Time: 5
+Ingredients: 1 avocado, 2 slices bread, 1 tsp lemon juice, salt
+Grade: C
+
+Recipe name: Chicken Pot Pie
+Recipe Procedure:
+Step 1: Prepare filling with chicken, vegetables, and cream sauce.
+Step 2: Cover with pastry and bake at 375°F for 30 minutes.
+Time: 60
+Ingredients: 1 cup chicken, 1 cup mixed vegetables, ½ cup cream, pie crust
+Grade: A
+
+Recipe name: Grilled Vegetables
+Recipe Procedure:
+Step 1: Toss vegetables with olive oil and salt.
+Step 2: Grill until lightly charred.
+Time: 15
+Ingredients: zucchini, bell pepper, onion, olive oil, salt, pepper
+Grade: C
+
+Recipe name: Chocolate Cake
+Recipe Procedure:
+Step 1: Mix flour, cocoa, sugar, eggs, and butter.
+Step 2: Bake at 350°F for 30 minutes.
+Time: 50
+Ingredients: 1 cup flour, ½ cup cocoa, ½ cup sugar, 2 eggs, ½ cup butter, baking powder
+Grade: B
+
+Recipe name: Sushi Rolls
+Recipe Procedure:
+Step 1: Spread rice on seaweed, add fillings like cucumber and fish.
+Step 2: Roll tightly and slice.
+Time: 40
+Ingredients: sushi rice, nori sheets, cucumber, salmon, soy sauce
+Grade: A
+
+Recipe name: Tofu Stir Fry
+Recipe Procedure:
+Step 1: Fry tofu cubes until golden.
+Step 2: Add vegetables and soy sauce, stir-fry 5 minutes.
+Time: 20
+Ingredients: ½ block tofu, 1 cup vegetables, soy sauce, garlic, sesame oil
+Grade: B
+
