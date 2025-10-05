@@ -6,6 +6,8 @@
 #include <vector>
 #include <string>
 #include <stdlib.h>
+#include <algorithm>
+#include <random>
 #include "RecipeDatabase.h" // 데이터베이스 클래스를 사용하기 위해 포함
 #include "Date.h"
 #include "Meal.h"
@@ -139,9 +141,9 @@ public:
     {
         std::cout << "\n===== Recipe Recommendation =====" << std::endl;
         std::cout << "Select your cooking difficulty level:" << std::endl;
-        std::cout << "A. Advanced (Hard recipes)" << std::endl;
-        std::cout << "B. Intermediate (Medium recipes)" << std::endl;
-        std::cout << "C. Beginner (Easy recipes)" << std::endl;
+        std::cout << "A. Advanced (All difficulty levels)" << std::endl;
+        std::cout << "B. Intermediate (Medium and Easy only)" << std::endl;
+        std::cout << "C. Beginner (Easy only)" << std::endl;
         std::cout << "Please select (A/B/C): ";
 
         char difficultyChoice;
@@ -153,51 +155,102 @@ public:
             difficultyChoice = difficultyChoice - 'a' + 'A';
         }
 
-        std::string difficultyLevel;
-        std::vector<std::string> recommendedRecipes;
-
-        switch (difficultyChoice)
+        if (difficultyChoice != 'A' && difficultyChoice != 'B' && difficultyChoice != 'C')
         {
-        case 'A':
-            difficultyLevel = "Advanced";
-            recommendedRecipes = {
-                "⭐ Beef Wellington - Classic British dish",
-                "⭐ Homemade Ramen - Complex broth and toppings",
-                "⭐ Duck Confit - French culinary technique",
-                "⭐ Soufflé - Delicate French dessert",
-                "⭐ Sushi Rolls - Japanese precision cooking"};
-            break;
-        case 'B':
-            difficultyLevel = "Intermediate";
-            recommendedRecipes = {
-                "⭐ Pasta Carbonara - Creamy Italian classic",
-                "⭐ Chicken Stir Fry - Balanced and nutritious",
-                "⭐ Beef Bulgogi - Korean marinated beef",
-                "⭐ Fish Tacos - Fresh and flavorful",
-                "⭐ Vegetable Curry - Aromatic spices"};
-            break;
-        case 'C':
-            difficultyLevel = "Beginner";
-            recommendedRecipes = {
-                "⭐ Scrambled Eggs - Easy breakfast dish",
-                "⭐ Toast with Butter - Simple and quick",
-                "⭐ Instant Noodles - 5-minute meal",
-                "⭐ Grilled Cheese Sandwich - Classic comfort food",
-                "⭐ Fruit Salad - Healthy and refreshing"};
-            break;
-        default:
             std::cout << "Invalid selection. Please try again." << std::endl;
             return;
         }
 
-        std::cout << "\n===== " << difficultyLevel << " Level Recommendations =====" << std::endl;
-        for (const auto &recipe : recommendedRecipes)
+        // RecipeDatabase에서 해당 난이도의 레시피들 가져오기
+        std::vector<std::string> availableRecipes = getRecipesByDifficultyLevel(difficultyChoice);
+
+        std::string difficultyLevel;
+        switch (difficultyChoice)
         {
-            std::cout << recipe << std::endl;
+        case 'A':
+            difficultyLevel = "Advanced (All levels)";
+            break;
+        case 'B':
+            difficultyLevel = "Intermediate (Medium & Easy)";
+            break;
+        case 'C':
+            difficultyLevel = "Beginner (Easy only)";
+            break;
         }
-        std::cout << "\nTotal " << recommendedRecipes.size() << " recipes recommended for " << difficultyLevel << " level." << std::endl;
+
+        std::cout << "\n===== " << difficultyLevel << " Recommendations =====" << std::endl;
+
+        if (availableRecipes.empty())
+        {
+            std::cout << "No recipes found for the selected difficulty level." << std::endl;
+            std::cout << "Please add some recipes to the database first!" << std::endl;
+            return;
+        }
+
+        // 랜덤하게 최대 5개 추천
+        std::vector<std::string> recommendedRecipes;
+
+        if (availableRecipes.size() <= 5)
+        {
+            // 5개 이하면 모든 레시피 추천
+            recommendedRecipes = availableRecipes;
+        }
+        else
+        {
+            // 5개 초과면 랜덤하게 5개 선택
+            std::vector<std::string> temp = availableRecipes;
+            std::random_device rd;
+            std::mt19937 g(rd());
+            std::shuffle(temp.begin(), temp.end(), g);
+
+            for (int i = 0; i < 5; i++)
+            {
+                recommendedRecipes.push_back(temp[i]);
+            }
+        }
+
+        // 추천 레시피 출력
+        for (size_t i = 0; i < recommendedRecipes.size(); i++)
+        {
+            std::cout << "⭐ " << (i + 1) << ". " << recommendedRecipes[i] << std::endl;
+        }
+
+        std::cout << "\nTotal " << recommendedRecipes.size() << " recipes recommended!" << std::endl;
+        std::cout << "(" << availableRecipes.size() << " recipes available for " << difficultyLevel << ")" << std::endl;
     }
 
+private:
+    // RecipeDatabase에서 난이도별 레시피 검색 (private helper 함수)
+    std::vector<std::string> getRecipesByDifficultyLevel(char maxLevel)
+    {
+        std::vector<std::string> result;
+
+        // 임시 더미 데이터 (실제로는 RecipeDatabase에서 검색해야 함)
+        if (maxLevel == 'A')
+        {
+            // A 선택: 모든 난이도 포함 (A, B, C)
+            result = {"Beef Wellington", "Homemade Ramen", "Duck Confit", "Soufflé",
+                      "Pasta Carbonara", "Chicken Stir Fry", "Beef Bulgogi",
+                      "Scrambled Eggs", "Toast", "Instant Noodles"};
+        }
+        else if (maxLevel == 'B')
+        {
+            // B 선택: B, C 난이도만 (A 제외)
+            result = {"Pasta Carbonara", "Chicken Stir Fry", "Beef Bulgogi",
+                      "Fish Tacos", "Vegetable Curry", "Scrambled Eggs",
+                      "Toast", "Grilled Cheese"};
+        }
+        else if (maxLevel == 'C')
+        {
+            // C 선택: C 난이도만 (쉬운 요리)
+            result = {"Scrambled Eggs", "Toast with Butter", "Instant Noodles",
+                      "Grilled Cheese Sandwich", "Fruit Salad"};
+        }
+
+        return result;
+    }
+
+public:
 private:
     // 일정 확인 함수
     void viewSchedule()
