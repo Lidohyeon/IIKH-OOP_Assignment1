@@ -9,6 +9,7 @@
 #include <algorithm>
 #include <random>
 #include "RecipeDatabase.h" // 데이터베이스 클래스를 사용하기 위해 포함
+#include "PlanManager.h"
 #include "Date.h"
 #include "Meal.h"
 
@@ -18,6 +19,7 @@ class Greeter
 {
 private:
     RecipeDatabase &db;          // 데이터베이스 객체에 대한 '참조'
+    PlanManager *planManager;        // PlanManager 객체에 대한 포인터
     std::vector<Date> schedules; // 일정을 저장할 벡터
 
     //===== Private Helper Functions (UI 처리) =====
@@ -47,7 +49,8 @@ private:
         cout << "7. Recommendation\n";
         cout << "8. Schedule Management\n";
         cout << "9. Meal Management\n";
-        cout << "10. Save and Exit\n";
+        cout << "10. Plan Manager\n";
+        cout << "11. Save and Exit\n";
         cout << "==========================\n";
         cout << "> ";
     }
@@ -81,7 +84,10 @@ private:
 
 public:
     // 생성자: 사용할 데이터베이스를 외부에서 받음
-    Greeter(RecipeDatabase &database) : db(database) {}
+    Greeter(RecipeDatabase &database) : db(database) {
+        planManager = new PlanManager();          
+        planManager->setRecipeDatabase(&db);       
+    }
 
     // 메인 메뉴 실행 함수
     void run()
@@ -125,6 +131,9 @@ public:
                 mealMenu();
                 break;
             case 10:
+                planManagerMenu();  // Plan Manager 추가
+                break;    
+            case 11:
                 cout << "Saving and exiting..." << endl;
                 db.saveToFile();
                 cout << "Data saved successfully. Goodbye!" << endl;
@@ -360,9 +369,93 @@ public:
         }
     }
 
+    // Plan Manager 메뉴 함수
+    void planManagerMenu()
+    {
+        int choice;
+        
+        while (true)
+        {
+            cout << "\n===== Plan Manager =====" << endl;
+            cout << "1. Add Recipe to Meal (Date + Meal Type + Recipe)" << endl;
+            cout << "2. Add Recipe to Date (Date + Recipe only)" << endl;
+            cout << "3. View Plan for Date" << endl;
+            cout << "4. View Full Plan" << endl;
+            cout << "5. Display Shopping List" << endl;
+            cout << "6. Back to Main Menu" << endl;
+            cout << "Select: ";
+            
+            cin >> choice;
+            cin.ignore();
+            
+            if (choice == 1)
+            {
+                string date, mealType, recipe;
+                int servings;
+                
+                cout << "Enter date (YYYY-MM-DD): ";
+                getline(cin, date);
+                
+                cout << "Enter meal type (Breakfast/Lunch/Dinner): ";
+                getline(cin, mealType);
+                
+                cout << "Enter recipe name: ";
+                getline(cin, recipe);
+                
+                cout << "Enter servings: ";
+                cin >> servings;
+                cin.ignore();
+                
+                planManager->addRecipeToMeal(date, mealType, recipe, servings);
+            }
+            else if (choice == 2)
+            {
+                string date, recipe;
+                int servings;
+                
+                cout << "Enter date (YYYY-MM-DD): ";
+                getline(cin, date);
+                
+                cout << "Enter recipe name: ";
+                getline(cin, recipe);
+                
+                cout << "Enter servings: ";
+                cin >> servings;
+                cin.ignore();
+                
+                planManager->addRecipeToDate(date, recipe, servings);
+            }
+            else if (choice == 3)
+            {
+                string date;
+                cout << "Enter date (YYYY-MM-DD): ";
+                getline(cin, date);
+                planManager->viewPlanForDate(date);
+            }
+            else if (choice == 4)
+            {
+                planManager->viewFullPlan();
+            }
+            else if (choice == 5)
+            {
+                planManager->displayShoppingList();
+            }
+            else if (choice == 6)
+            {
+                cout << "Returning to main menu..." << endl;
+                break;
+            }
+            else
+            {
+                cout << "Invalid choice." << endl;
+            }
+        }
+    }
+
     // 소멸자
     ~Greeter()
     {
+        delete planManager; // 동적 할당된 PlanManager 객체 해제
         std::cout << "Greeter object is being destroyed." << std::endl;
     }
 };
