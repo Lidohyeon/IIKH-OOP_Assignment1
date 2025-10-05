@@ -384,6 +384,11 @@ public:
             recipe.display();
         }
     }
+
+    //Meal에서 RecipeDatabase연동
+    //Meal이 DB에서 레시피를 찾으려면 내부 vector에 접근해야 해서
+    const vector<Recipe>& getRecipes() const { return recipes; }
+
 };
 
 #endif // RECIPE_DATABASE_H
