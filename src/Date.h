@@ -139,7 +139,7 @@ public:
     // 출력 연산자 오버로딩
     friend std::ostream &operator<<(std::ostream &os, const Date &date)
     {
-        os << date.toString();
+        os << date.toString();          
         return os;
     }
 
