@@ -200,38 +200,45 @@ public:
      * 사용자가 "2024-10-05 저녁에 김치찌개 추가" 같은 형태로 간편하게 추가
      */
     void addRecipeToMeal(const string& dateStr, 
-                         const string& mealType, 
-                         const string& recipeName, 
-                         int servings = 1)
-    {
-        if (recipeDB == nullptr) {
-            cout << "❌ Error: RecipeDatabase not connected!" << endl;
-            return;
-        }
-        
-        // 해당 날짜에 해당 타입의 Meal이 이미 있는지 확인
-        bool found = false;
-        
-        if (mealPlan.find(dateStr) != mealPlan.end()) {
-            for (Meal& meal : mealPlan[dateStr]) {
-                if (meal.getMealType() == mealType) {
-                    // 이미 존재하는 Meal에 레시피 추가
-                    meal.addRecipe(*recipeDB, recipeName);
-                    found = true;
-                    break;
-                }
+                     const string& mealType, 
+                     const string& recipeName, 
+                     int servings = 1)
+{
+    if (recipeDB == nullptr) {
+        cout << "❌ Error: RecipeDatabase not connected!" << endl;
+        return;
+    }
+    
+    bool found = false;
+    
+    // 1. 이미 존재하는 Meal에 레시피 추가 시도
+    if (mealPlan.find(dateStr) != mealPlan.end()) {
+        for (Meal& meal : mealPlan[dateStr]) {
+            if (meal.getMealType() == mealType) {
+                meal.addRecipe(*recipeDB, recipeName);
+                found = true;
+                break;
             }
         }
-        
-        // 해당 끼니가 없으면 새로 생성
-        if (!found) {
-            Meal newMeal(mealType, servings);
-            newMeal.addRecipe(*recipeDB, recipeName);
-            mealPlan[dateStr].push_back(newMeal);
-            
-            cout << "New " << mealType << " created on " << dateStr << endl;
-        }
     }
+    
+    // 2. Meal이 존재하지 않아 새로 생성해야 하는 경우
+    if (!found) {
+        // 새로운 Meal 객체 생성 및 레시피 추가 후 저장
+        Meal newMeal(mealType, servings);
+        newMeal.addRecipe(*recipeDB, recipeName);
+        mealPlan[dateStr].push_back(newMeal);
+
+        // ✅ 상세 피드백: 새로 생성됨
+        cout << "✅ New " << mealType << " created and recipe '" << recipeName 
+             << "' added on " << dateStr << endl;
+
+    } else {
+        // ✅ 상세 피드백: 기존 Meal에 추가됨
+        cout << "✅ Recipe '" << recipeName << "' added to existing " 
+             << mealType << " on " << dateStr << endl;
+    }
+}
     
     /**
      * 🆕 편의 메소드 2: 날짜 + 레시피 이름 (끼니 구분 없음)
