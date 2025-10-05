@@ -385,10 +385,46 @@ public:
         }
     }
 
-    //Meal에서 RecipeDatabase연동
-    //Meal이 DB에서 레시피를 찾으려면 내부 vector에 접근해야 해서
-    const vector<Recipe>& getRecipes() const { return recipes; }
+    // Meal에서 RecipeDatabase연동
+    // Meal이 DB에서 레시피를 찾으려면 내부 vector에 접근해야 해서
+    const vector<Recipe> &getRecipes() const { return recipes; }
 
+    // 난이도별 레시피 검색 함수 (추천 시스템용)
+    vector<string> getRecipesByDifficultyLevel(char maxLevel) const
+    {
+        vector<string> result;
+
+        for (const auto &recipe : recipes)
+        {
+            Difficulty recipeDiff = recipe.getDifficulty();
+
+            // 선택된 난이도 이하의 레시피만 포함
+            bool shouldInclude = false;
+
+            if (maxLevel == 'A')
+            {
+                // A 선택: A, B, C 모든 난이도 포함
+                shouldInclude = true;
+            }
+            else if (maxLevel == 'B')
+            {
+                // B 선택: B, C 난이도만 포함 (A 제외)
+                shouldInclude = (recipeDiff == Difficulty::B || recipeDiff == Difficulty::C);
+            }
+            else if (maxLevel == 'C')
+            {
+                // C 선택: C 난이도만 포함
+                shouldInclude = (recipeDiff == Difficulty::C);
+            }
+
+            if (shouldInclude)
+            {
+                result.push_back(recipe.getTitle());
+            }
+        }
+
+        return result;
+    }
 };
 
 #endif // RECIPE_DATABASE_H

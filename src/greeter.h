@@ -223,31 +223,8 @@ private:
     // RecipeDatabase에서 난이도별 레시피 검색 (private helper 함수)
     std::vector<std::string> getRecipesByDifficultyLevel(char maxLevel)
     {
-        std::vector<std::string> result;
-
-        // 임시 더미 데이터 (실제로는 RecipeDatabase에서 검색해야 함)
-        if (maxLevel == 'A')
-        {
-            // A 선택: 모든 난이도 포함 (A, B, C)
-            result = {"Beef Wellington", "Homemade Ramen", "Duck Confit", "Soufflé",
-                      "Pasta Carbonara", "Chicken Stir Fry", "Beef Bulgogi",
-                      "Scrambled Eggs", "Toast", "Instant Noodles"};
-        }
-        else if (maxLevel == 'B')
-        {
-            // B 선택: B, C 난이도만 (A 제외)
-            result = {"Pasta Carbonara", "Chicken Stir Fry", "Beef Bulgogi",
-                      "Fish Tacos", "Vegetable Curry", "Scrambled Eggs",
-                      "Toast", "Grilled Cheese"};
-        }
-        else if (maxLevel == 'C')
-        {
-            // C 선택: C 난이도만 (쉬운 요리)
-            result = {"Scrambled Eggs", "Toast with Butter", "Instant Noodles",
-                      "Grilled Cheese Sandwich", "Fruit Salad"};
-        }
-
-        return result;
+        // RecipeDatabase에서 실제 레시피를 검색
+        return db.getRecipesByDifficultyLevel(maxLevel);
     }
 
 public:
@@ -350,7 +327,7 @@ public:
                 cout << "Enter recipe name: ";
                 cin.ignore();
                 getline(cin, r);
-                meal.addRecipe(r);
+                meal.addRecipe(db, r);
             }
             else if (c == 2)
             {
