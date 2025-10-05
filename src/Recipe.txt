@@ -351,14 +351,6 @@ Time: 70
 Ingredients: 6 lasagna sheets, ½ lb beef, 1 cup tomato sauce, mozzarella, ricotta, herbs
 Grade: A
 
-Recipe name: Pesto Pasta
-Recipe Procedure:
-Step 1: Blend basil, garlic, pine nuts, and olive oil into pesto.
-Step 2: Toss with cooked pasta and parmesan.
-Time: 20
-Ingredients: 200g pasta, 1 cup basil, 2 cloves garlic, 2 tbsp olive oil, 1 tbsp pine nuts, parmesan
-Grade: B
-
 Recipe name: Vegetable Soup
 Recipe Procedure:
 Step 1: Sauté onions and carrots.

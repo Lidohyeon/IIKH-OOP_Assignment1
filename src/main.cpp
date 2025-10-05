@@ -1,16 +1,20 @@
-#include "Greeter.h"
+#include "greeter.h"
 #include "RecipeDatabase.h" // main에서도 알아야 함
 #include <iostream>
 
-int main() {
+int main()
+{
     // 1. 데이터베이스 객체를 먼저 생성
     RecipeDatabase db;
 
     // 2. 파일에서 데이터를 불러와서 db를 채움
     string filename = "Recipe.txt";
-    if (db.loadFromFile(filename)) {
+    if (db.loadFromFile(filename))
+    {
         cout << "Successfully loaded recipes from " << filename << endl;
-    } else {
+    }
+    else
+    {
         cout << "Could not find " << filename << ". Starting with an empty database." << endl;
     }
 
