@@ -1,130 +1,76 @@
-#include <stdio.h>
-#include <stdlib.h>
+#ifndef GREETER_H
+#define GREETER_H
+
 #include <iostream>
-#include <string>
-#include <vector>
-#include "Date.h"
-#include "Meal.h"
+#include <limits>
+#include "RecipeDatabase.h" // 데이터베이스 클래스를 사용하기 위해 포함
+
+using namespace std;
 
 class Greeter
 {
 private:
-    std::vector<std::string> data; // 데이터를 저장할 벡터
-    std::vector<Date> schedules;   // 일정을 저장할 벡터
+    RecipeDatabase &db; // 데이터베이스 객체에 대한 '참조'
 
-public:
-    // 생성자
-    Greeter()
-    {
-        showWelcome();
-        showMenu();
-    }
+    //===== Private Helper Functions (UI 처리) =====
 
-    // 환영 메시지 표시 함수 (IIKH 큰 글씨)
     void showWelcome()
     {
-        std::cout << "\n";
-        std::cout << "██╗██╗██╗██╗  ██╗██╗  ██╗" << std::endl;
-        std::cout << "██║██║██║██║ ██╔╝██║  ██║" << std::endl;
-        std::cout << "██║██║██║█████╔╝ ███████║" << std::endl;
-        std::cout << "██║██║██║██╔═██╗ ██╔══██║" << std::endl;
-        std::cout << "██║██║██║██║  ██╗██║  ██║" << std::endl;
-        std::cout << "╚═╝╚═╝╚═╝╚═╝  ╚═╝╚═╝  ╚═╝" << std::endl;
-        std::cout << "\nWelcome to IIKH Data Management System!" << std::endl;
-        std::cout << "=========================================" << std::endl;
+        cout << "\n";
+        cout << "██╗██╗██╗██╗  ██╗██╗  ██╗" << endl;
+        cout << "██║██║██║██║ ██╔╝██║  ██║" << endl;
+        cout << "██║██║██║█████╔╝ ███████║" << endl;
+        cout << "██║██║██║██╔═██╗ ██╔══██║" << endl;
+        cout << "██║██║██║██║  ██╗██║  ██║" << endl;
+        cout << "╚═╝╚═╝╚═╝╚═╝  ╚═╝╚═╝  ╚═╝" << endl;
+        cout << "\nWelcome to IIKH Data Management System!" << endl;
+        cout << "=========================================" << endl;
     }
 
-    // 메뉴 표시 함수
     void showMenu()
     {
-        int choice;
-
-        while (true)
-        {
-            std::cout << "\n===== Menu Selection =====" << std::endl;
-            std::cout << "1. Search" << std::endl;
-            std::cout << "2. Insert" << std::endl;
-            std::cout << "3. Delete" << std::endl;
-            std::cout << "4. Recommendation" << std::endl;
-            std::cout << "5. Schedule Management" << std::endl;
-            std::cout << "6. Meal Management " << std ::endl;
-            std::cout << "7. Exit" << std::endl;
-            std::cout << "Please select: ";
-
-            std::cin >> choice;
-
-            switch (choice)
-            {
-            case 1:
-                searchData();
-                break;
-            case 2:
-                insertData();
-                break;
-            case 3:
-                deleteData();
-                break;
-            case 4:
-                recommendData();
-                break;
-            case 5:
-                scheduleMenu();
-                break;
-            case 6:
-                mealMenu();
-                break;
-            case 7:
-                std::cout << "Exiting the program. Thank you!" << std::endl;
-                return;
-            default:
-                std::cout << "Invalid selection. Please try again." << std::endl;
-                break;
-            }
-        }
+        cout << "\n===== Main Menu =====\n";
+        cout << "1. Insert New Recipe\n";
+        cout << "2. Search for a Recipe\n";
+        cout << "3. Delete a Recipe\n";
+        cout << "4. Edit a Recipe\n";
+        cout << "5. Sort Recipes by Title\n";
+        cout << "6. List All Recipes\n";
+        cout << "7. Save and Exit\n";
+        cout << "==========================\n";
+        cout << "> ";
     }
 
-    // 데이터 검색 함수
-    void searchData()
+    void handleInsert()
     {
-        if (data.empty())
-        {
-            std::cout << "No data stored." << std::endl;
-            return;
-        }
-
-        std::string searchTerm;
-        std::cout << "Enter data to search: ";
-        std::cin.ignore(); // 이전 입력의 개행문자 제거
-        std::getline(std::cin, searchTerm);
-
-        bool found = false;
-        for (size_t i = 0; i < data.size(); i++)
-        {
-            if (data[i].find(searchTerm) != std::string::npos)
-            {
-                std::cout << "Found data [" << i << "]: " << data[i] << std::endl;
-                found = true;
-            }
-        }
-
-        if (!found)
-        {
-            std::cout << "No data containing '" << searchTerm << "' was found." << std::endl;
-        }
+        db.insertRecipe(); // 데이터베이스 객체에게 삽입을 요청
     }
 
-    // 데이터 삽입 함수
-    void insertData()
+    void handleSearch()
     {
-        std::string newData;
-        std::cout << "Enter data to add: ";
-        std::cin.ignore(); // 이전 입력의 개행문자 제거
-        std::getline(std::cin, newData);
-
-        data.push_back(newData);
-        std::cout << "Data added successfully." << std::endl;
-        std::cout << "Current number of stored data: " << data.size() << std::endl;
+        db.searchRecipe(); // 데이터베이스 객체에게 검색을 요청
     }
+
+    void handleDelete()
+    {
+        db.deleteRecipe(); // 데이터베이스 객체에게 삭제를 요청
+    }
+
+    void handleEdit()
+    {
+        db.editRecipe(); // 데이터베이스 객체에게 수정을 요청
+    }
+
+    void handleSort()
+    {
+        db.sortRecipe(); // 데이터베이스 객체에게 정렬을 요청
+        cout << "Recipes have been sorted." << endl;
+        db.displayAll(); // 정렬된 결과를 보여줌
+    }
+
+public:
+    // 생성자: 사용할 데이터베이스를 외부에서 받음
+    Greeter(RecipeDatabase &database) : db(database) {}
 
     // 데이터 삭제 함수
     void deleteData()
@@ -161,65 +107,36 @@ public:
     // 추천 함수
     void recommendData()
     {
-        std::cout << "\n===== Recipe Recommendation =====" << std::endl;
-        std::cout << "Select your cooking difficulty level:" << std::endl;
-        std::cout << "A. Advanced (Hard recipes)" << std::endl;
-        std::cout << "B. Intermediate (Medium recipes)" << std::endl;
-        std::cout << "C. Beginner (Easy recipes)" << std::endl;
-        std::cout << "Please select (A/B/C): ";
-
-        char difficultyChoice;
-        std::cin >> difficultyChoice;
-
-        // 대소문자 통일
-        if (difficultyChoice >= 'a' && difficultyChoice <= 'c')
+        if (data.empty())
         {
-            difficultyChoice = difficultyChoice - 'a' + 'A';
-        }
-
-        std::string difficultyLevel;
-        std::vector<std::string> recommendedRecipes;
-
-        switch (difficultyChoice)
-        {
-        case 'A':
-            difficultyLevel = "Advanced";
-            recommendedRecipes = {
-                "⭐ Beef Wellington - Classic British dish",
-                "⭐ Homemade Ramen - Complex broth and toppings",
-                "⭐ Duck Confit - French culinary technique",
-                "⭐ Soufflé - Delicate French dessert",
-                "⭐ Sushi Rolls - Japanese precision cooking"};
-            break;
-        case 'B':
-            difficultyLevel = "Intermediate";
-            recommendedRecipes = {
-                "⭐ Pasta Carbonara - Creamy Italian classic",
-                "⭐ Chicken Stir Fry - Balanced and nutritious",
-                "⭐ Beef Bulgogi - Korean marinated beef",
-                "⭐ Fish Tacos - Fresh and flavorful",
-                "⭐ Vegetable Curry - Aromatic spices"};
-            break;
-        case 'C':
-            difficultyLevel = "Beginner";
-            recommendedRecipes = {
-                "⭐ Scrambled Eggs - Easy breakfast dish",
-                "⭐ Toast with Butter - Simple and quick",
-                "⭐ Instant Noodles - 5-minute meal",
-                "⭐ Grilled Cheese Sandwich - Classic comfort food",
-                "⭐ Fruit Salad - Healthy and refreshing"};
-            break;
-        default:
-            std::cout << "Invalid selection. Please try again." << std::endl;
+            std::cout << "No data available for recommendation." << std::endl;
             return;
         }
 
-        std::cout << "\n===== " << difficultyLevel << " Level Recommendations =====" << std::endl;
-        for (const auto &recipe : recommendedRecipes)
+        std::cout << "\n===== Data Recommendations =====" << std::endl;
+
+        if (data.size() == 1)
         {
-            std::cout << recipe << std::endl;
+            std::cout << "Only one data available: " << data[0] << std::endl;
         }
-        std::cout << "\nTotal " << recommendedRecipes.size() << " recipes recommended for " << difficultyLevel << " level." << std::endl;
+        else if (data.size() <= 3)
+        {
+            std::cout << "All available data:" << std::endl;
+            for (size_t i = 0; i < data.size(); i++)
+            {
+                std::cout << "⭐ " << data[i] << std::endl;
+            }
+        }
+        else
+        {
+            std::cout << "Top 3 recommended data:" << std::endl;
+            // 랜덤하게 3개 선택하거나 처음 3개 표시
+            for (size_t i = 0; i < 3 && i < data.size(); i++)
+            {
+                std::cout << "⭐ " << data[i] << std::endl;
+            }
+            std::cout << "\nTotal " << data.size() << " data items available." << std::endl;
+        }
     }
 
     // 일정 확인 함수
@@ -358,8 +275,3 @@ public:
         std::cout << "Greeter object is being destroyed." << std::endl;
     }
 };
-
-// 난이도 선택 항목 추가
-//  레시피 디비에게 받은
-//  사용자의 요리 능력 (제약) 사용자의 능력을 고려해서 max difficult level을 사용자가 설정한다.
-//  입력받은 모든 max difficult level이하의 요리들을 보여주는 것.

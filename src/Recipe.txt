@@ -1,10 +1,17 @@
+Recipe name: Aussie Chicken
+Recipe Procedure:
+
+Time: 0
+Ingredients: 
+Grade: A
+
 Recipe name: Garlic Butter Shrimp Pasta
 Recipe Procedure:
 Step 1: Boil pasta in salted water until al dente.
 Step 2: In a skillet, melt butter and add minced garlic.
 Step 3: Toss in shrimp, cook 2 minutes per side.
 Step 4: Mix pasta with shrimp and parsley. Serve warm.
-Time: 20
+Time: 25
 Ingredients: 200g spaghetti, 1 lb shrimp, 3 tbsp butter, 3 cloves garlic, salt, pepper, parsley
 Grade: A
 
@@ -413,7 +420,7 @@ Recipe name: Sushi Rolls
 Recipe Procedure:
 Step 1: Spread rice on seaweed, add fillings like cucumber and fish.
 Step 2: Roll tightly and slice.
-Time: 35
+Time: 40
 Ingredients: sushi rice, nori sheets, cucumber, salmon, soy sauce
 Grade: A
 
@@ -425,11 +432,3 @@ Time: 20
 Ingredients: ½ block tofu, 1 cup vegetables, soy sauce, garlic, sesame oil
 Grade: B
 
-Recipe name: Garlic Butter Scallops
-Recipe Procedure:
-Step 1: Pat dry scallops and season with salt.
-Step 2: Sear in hot butter 2 minutes each side.
-Step 3: Add garlic and lemon juice, toss quickly.
-Time: 15
-Ingredients: 10 scallops, 2 tbsp butter, 2 cloves garlic, 1 tsp lemon juice
-Grade: A
