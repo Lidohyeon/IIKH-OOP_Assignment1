@@ -9,6 +9,8 @@
 #include "Meal.h"
 #include "RecipeDatabase.h"
 #include "Recipe.h"
+#include <iomanip> // 1. <iomanip> 헤더를 추가 10-05 pm10:45
+#include <sstream> // 1. stringstream 사용 위해 추가 10-05 pm10:45
 
 using namespace std;
 
@@ -462,7 +464,7 @@ public:
         }
         
         // 재료와 수량을 저장할 맵
-        map<string, int> ingredientCount;  // 재료명 -> 개수
+        map<string, double> ingredientCount;  // 재료명 -> 개수
         
         // Step 1: 모든 날짜 순회
         for (const auto& dayPlan : mealPlan) {
@@ -485,22 +487,41 @@ public:
                 for (const Recipe& recipe : recipes) {
                     cout << "      🔍 Recipe: " << recipe.getTitle() << endl;
                     
-                    const vector<string>& ingredients = recipe.getIngredient();
+                    // string vector가 아닌 Ingredient vector로 변경됨 10-05 pm10:45
+                    const vector<Ingredient>& ingredients = recipe.getIngredient();
                     
-                    // Step 5: 재료 카운트 (인분 수만큼 곱하기)
-                    for (const string& ingredient : ingredients) {
-                        ingredientCount[ingredient] += servings;
-                        cout << "         ✅ " << ingredient 
-                             << " (x" << servings << ")" << endl;
+                    // Step 5: 재료 카운트 (인분 수만큼 곱하기) vector<Ingredient>로 변경됨 10-05 pm10:45
+                    // [수정] vector<Ingredient>를 올바르게 순회합니다.
+                for (const Ingredient& ingredient : recipe.getIngredient()) {
+                    
+                    // 양(quantity)이 0보다 큰 재료만 장보기 목록에 추가
+                    if (ingredient.quantity > 0) {
+                        // [수정] '이름 (단위)'를 고유한 Key로 사용합니다.
+                        // 예: "flour (cup)", "egg (ea)"
+                        string key = ingredient.name + " (" + ingredient.unit + ")";
+                        
+                        // [수정] '재료의 양 * 인분 수'를 총량에 더해줍니다.
+                        ingredientCount[key] += ingredient.quantity * servings;
                     }
+                }
                 }
             }
         }
-        
+        // ingredient 재료 수를 double 로 바꿔서 소수점 2자리까지만 출력하도록 변경
         // Step 6: map을 vector로 변환
         cout << "\n📋 Consolidating ingredients..." << endl;
         for (const auto& item : ingredientCount) {
-            string entry = item.first + " (needed for " + to_string(item.second) + " serving(s))";
+            stringstream ss;
+    
+            // 2. cout에 하던 것과 똑같이, 소수점 2자리로 포맷 지정
+            ss << fixed << setprecision(2) << item.second;
+    
+            // 3. 포맷팅이 완료된 문자열을 추출
+            string formatted_quantity = ss.str();
+
+            // 4. to_string 대신 포맷팅된 문자열을 사용하여 최종 entry 생성
+            string entry = item.first + " (needed for " + formatted_quantity + " serving(s))";
+    
             shoppingList.push_back(entry);
         }
         

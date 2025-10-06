@@ -79,7 +79,8 @@ private:
     {
         db.sortRecipe(); // 데이터베이스 객체에게 정렬을 요청
         cout << "Recipes have been sorted." << endl;
-        db.displayAll(); // 정렬된 결과를 보여줌
+        //db.displayAll(); 
+        // 정렬된 결과를 보여줌을 없앴습니다.sort 할 때 안나올겁니다! 10-05 pm10:45
     }
 
 public:
