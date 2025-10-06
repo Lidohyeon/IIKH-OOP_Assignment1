@@ -27,33 +27,33 @@ private:
 
     void showWelcome()
     {
-        cout << "\n";
-        cout << "██╗██╗██╗██╗  ██╗██╗  ██╗" << endl;
-        cout << "██║██║██║██║ ██╔╝██║  ██║" << endl;
-        cout << "██║██║██║█████╔╝ ███████║" << endl;
-        cout << "██║██║██║██╔═██╗ ██╔══██║" << endl;
-        cout << "██║██║██║██║  ██╗██║  ██║" << endl;
-        cout << "╚═╝╚═╝╚═╝╚═╝  ╚═╝╚═╝  ╚═╝" << endl;
-        cout << "\nWelcome to IIKH Data Management System!" << endl;
-        cout << "=========================================" << endl;
+        std::cout << "\n";
+        std::cout << "██╗██╗██╗██╗  ██╗██╗  ██╗" << std::endl;
+        std::cout << "██║██║██║██║ ██╔╝██║  ██║" << std::endl;
+        std::cout << "██║██║██║█████╔╝ ███████║" << std::endl;
+        std::cout << "██║██║██║██╔═██╗ ██╔══██║" << std::endl;
+        std::cout << "██║██║██║██║  ██╗██║  ██║" << std::endl;
+        std::cout << "╚═╝╚═╝╚═╝╚═╝  ╚═╝╚═╝  ╚═╝" << std::endl;
+        std::cout << "\nWelcome to IIKH Data Management System!" << std::endl;
+        std::cout << "=========================================" << std::endl;
     }
 
     void showMenu()
     {
-        cout << "\n===== Main Menu =====\n";
-        cout << "1. Insert New Recipe\n";
-        cout << "2. Search for a Recipe\n";
-        cout << "3. Delete a Recipe\n";
-        cout << "4. Edit a Recipe\n";
-        cout << "5. Sort Recipes by Title\n";
-        cout << "6. List All Recipes\n";
-        cout << "7. Recommendation\n";
-        cout << "8. Schedule Management\n";
-        cout << "9. Meal Management\n";
-        cout << "10. Plan Manager\n";
-        cout << "11. Save and Exit\n";
-        cout << "==========================\n";
-        cout << "> ";
+        std::cout << "\n===== Main Menu =====\n";
+        std::cout << "1. Insert New Recipe\n";
+        std::cout << "2. Search for a Recipe\n";
+        std::cout << "3. Delete a Recipe\n";
+        std::cout << "4. Edit a Recipe\n";
+        std::cout << "5. Sort Recipes by Title\n";
+        std::cout << "6. List All Recipes\n";
+        std::cout << "7. Recommendation\n";
+        std::cout << "8. Schedule Management\n";
+        std::cout << "9. Meal Management\n";
+        std::cout << "10. Plan Manager\n";
+        std::cout << "11. Save and Exit\n";
+        std::cout << "==========================\n";
+        std::cout << "> ";
     }
 
     void handleInsert()
@@ -79,7 +79,7 @@ private:
     void handleSort()
     {
         db.sortRecipe(); // 데이터베이스 객체에게 정렬을 요청
-        cout << "Recipes have been sorted." << endl;
+        std::cout << "Recipes have been sorted." << std::endl;
         // db.displayAll();
         //  정렬된 결과를 보여줌을 없앴습니다.sort 할 때 안나올겁니다! 10-05 pm10:45
     }
@@ -150,12 +150,12 @@ public:
                 planManagerMenu(); // Plan Manager 추가
                 break;
             case 11:
-                cout << "Saving and exiting..." << endl;
+                std::cout << "Saving and exiting..." << std::endl;
                 db.saveToFile();
-                cout << "Data saved successfully. Goodbye!" << endl;
+                std::cout << "Data saved successfully. Goodbye!" << std::endl;
                 return;
             default:
-                cout << "Invalid selection. Please try again." << endl;
+                std::cout << "Invalid selection. Please try again." << std::endl;
                 break;
             }
         }
@@ -252,8 +252,6 @@ private:
         return db.getRecipesByDifficultyLevel(maxLevel);
     }
 
-public:
-private:
     // 일정 확인 함수
     void viewSchedule()
     {
@@ -327,46 +325,46 @@ public:
     // Meal 관리 메뉴 함수
     void mealMenu()
     {
-        cout << "\n===== Meal Management =====" << endl;
-        cout << "Select meal type (1: Breakfast, 2: Lunch, 3: Dinner): ";
+        std::cout << "\n===== Meal Management =====" << std::endl;
+        std::cout << "Select meal type (1: Breakfast, 2: Lunch, 3: Dinner): ";
         int t;
-        cin >> t;
+        std::cin >> t;
         string type = (t == 1 ? "Breakfast" : (t == 2 ? "Lunch" : "Dinner"));
         Meal meal(type);
 
         while (true)
         {
-            cout << "\n===== " << type << " Menu =====" << endl;
-            cout << "1. Add Recipe" << endl;
-            cout << "2. Remove Recipe" << endl;
-            cout << "3. Set Servings" << endl;
-            cout << "4. Display Meal" << endl;
-            cout << "5. Back" << endl;
-            cout << "Select: ";
+            std::cout << "\n===== " << type << " Menu =====" << std::endl;
+            std::cout << "1. Add Recipe" << std::endl;
+            std::cout << "2. Remove Recipe" << std::endl;
+            std::cout << "3. Set Servings" << std::endl;
+            std::cout << "4. Display Meal" << std::endl;
+            std::cout << "5. Back" << std::endl;
+            std::cout << "Select: ";
             int c;
-            cin >> c;
+            std::cin >> c;
 
             if (c == 1)
             {
                 string r;
-                cout << "Enter recipe name: ";
-                cin.ignore();
-                getline(cin, r);
-                meal.addRecipe(db, r);
+                std::cout << "Enter recipe name: ";
+                std::cin.ignore();
+                getline(std::cin, r);
+                meal.addRecipe(r);
             }
             else if (c == 2)
             {
                 string r;
-                cout << "Enter recipe name to remove: ";
-                cin.ignore();
-                getline(cin, r);
+                std::cout << "Enter recipe name to remove: ";
+                std::cin.ignore();
+                getline(std::cin, r);
                 meal.removeRecipe(r);
             }
             else if (c == 3)
             {
                 int s;
-                cout << "Enter servings: ";
-                cin >> s;
+                std::cout << "Enter servings: ";
+                std::cin >> s;
                 meal.setServings(s);
             }
             else if (c == 4)
@@ -375,12 +373,12 @@ public:
             }
             else if (c == 5)
             {
-                cout << "Returning to main menu..." << endl;
+                std::cout << "Returning to main menu..." << std::endl;
                 break;
             }
             else
             {
-                cout << "Invalid choice." << endl;
+                std::cout << "Invalid choice." << std::endl;
             }
         }
     }
@@ -392,78 +390,74 @@ public:
 
         while (true)
         {
-            cout << "\n===== Plan Manager =====" << endl;
-            cout << "1. Add Recipe to Meal (Date + Meal Type + Recipe)" << endl;
-            cout << "2. Add Recipe to Date (Date + Recipe only)" << endl;
-            cout << "3. View Plan for Date" << endl;
-            cout << "4. View Full Plan" << endl;
-            cout << "5. Display Shopping List" << endl;
-            cout << "6. Back to Main Menu" << endl;
-            cout << "Select: ";
+            std::cout << "\n===== Plan Manager =====" << std::endl;
+            std::cout << "1. Add Recipe to Meal (Date + Meal Type + Recipe)" << std::endl;
+            std::cout << "2. View Plan for Date" << std::endl;
+            std::cout << "3. View Full Plan" << std::endl;
+            std::cout << "4. Display Shopping List" << std::endl;
+            std::cout << "5. Set Difficulty Constraint" << std::endl;
+            std::cout << "6. Generate Balanced Plan" << std::endl;
+            std::cout << "7. Back to Main Menu" << std::endl;
+            std::cout << "Select: ";
 
-            cin >> choice;
-            cin.ignore();
+            std::cin >> choice;
+            std::cin.ignore();
 
             if (choice == 1)
             {
                 string date, mealType, recipe;
                 int servings;
 
-                cout << "Enter date (YYYY-MM-DD): ";
-                getline(cin, date);
+                std::cout << "Enter date (YYYY-MM-DD): ";
+                getline(std::cin, date);
 
-                cout << "Enter meal type (Breakfast/Lunch/Dinner): ";
-                getline(cin, mealType);
+                std::cout << "Enter meal type (Breakfast/Lunch/Dinner): ";
+                getline(std::cin, mealType);
 
-                cout << "Enter recipe name: ";
-                getline(cin, recipe);
+                std::cout << "Enter recipe name: ";
+                getline(std::cin, recipe);
 
-                cout << "Enter servings: ";
-                cin >> servings;
-                cin.ignore();
+                std::cout << "Enter servings: ";
+                std::cin >> servings;
+                std::cin.ignore();
 
                 planManager->addRecipeToMeal(date, mealType, recipe, servings);
             }
             else if (choice == 2)
             {
-                string date, recipe;
-                int servings;
-
-                cout << "Enter date (YYYY-MM-DD): ";
-                getline(cin, date);
-
-                cout << "Enter recipe name: ";
-                getline(cin, recipe);
-
-                cout << "Enter servings: ";
-                cin >> servings;
-                cin.ignore();
-
-                planManager->addRecipeToDate(date, recipe, servings);
+                string date;
+                std::cout << "Enter date (YYYY-MM-DD): ";
+                getline(std::cin, date);
+                planManager->viewPlanForDate(date);
             }
             else if (choice == 3)
             {
-                string date;
-                cout << "Enter date (YYYY-MM-DD): ";
-                getline(cin, date);
-                planManager->viewPlanForDate(date);
+                planManager->viewFullPlan();
             }
             else if (choice == 4)
             {
-                planManager->viewFullPlan();
+                planManager->displayShoppingList();
             }
             else if (choice == 5)
             {
-                planManager->displayShoppingList();
+                char level;
+                std::cout << "Enter maximum difficulty level (A, B, C): ";
+                std::cin >> level;
+                std::cin.ignore();
+                planManager->setDifficultyConstraint(level);
             }
             else if (choice == 6)
             {
-                cout << "Returning to main menu..." << endl;
+                planManager->generateBalancedPlan();
+            }
+            else if (choice == 7)
+            {
+                std::cout << "Returning to main menu..." << std::endl;
                 break;
             }
             else
             {
-                cout << "Invalid choice." << endl;
+                std::cout << "Invalid choice." << std::endl;
             }
         }
     }
@@ -476,6 +470,4 @@ public:
     }
 };
 
-#endif
-
-// (Removed duplicate global functions and misplaced destructor. All schedule and meal management functions are implemented inside the Greeter class above.)
+#endif // GREETER_H

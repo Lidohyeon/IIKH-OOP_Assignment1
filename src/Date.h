@@ -143,6 +143,42 @@ public:
         return os;
     }
 
+    // 윤년인지 확인하는 헬퍼 함수
+    bool isLeapYear(int y) const {
+        return (y % 4 == 0 && y % 100 != 0) || (y % 400 == 0);
+    }
+
+    // 해당 월의 마지막 날짜를 반환하는 헬퍼 함수
+    int daysInMonth(int y, int m) const {
+        if (m == 2) {
+            return isLeapYear(y) ? 29 : 28;
+        } else if (m == 4 || m == 6 || m == 9 || m == 11) {
+            return 30;
+        } else {
+            return 31;
+        }
+    }
+
+    // 날짜를 하루 증가시키는 함수
+    void incrementDay() {
+        day++;
+        if (day > daysInMonth(year, month)) {
+            day = 1;
+            month++;
+            if (month > 12) {
+                month = 1;
+                year++;
+            }
+        }
+    }
+
+    // '작거나 같음' 비교 연산자 (루프 종료 조건에 사용)
+    bool operator<=(const Date& other) const {
+        if (year != other.year) return year < other.year;
+        if (month != other.month) return month < other.month;
+        return day <= other.day;
+    }
+
     // 비교 연산자 (날짜 정렬을 위해)
     bool operator<(const Date &other) const
     {
