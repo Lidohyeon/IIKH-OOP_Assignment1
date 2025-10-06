@@ -350,7 +350,7 @@ public:
                 std::cout << "Enter recipe name: ";
                 std::cin.ignore();
                 getline(std::cin, r);
-                meal.addRecipe(r);
+                meal.addRecipe(db, r);
             }
             else if (c == 2)
             {
