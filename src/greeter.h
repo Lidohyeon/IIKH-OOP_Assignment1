@@ -379,11 +379,12 @@ public:
         {
             cout << "\n===== Plan Manager =====" << endl;
             cout << "1. Add Recipe to Meal (Date + Meal Type + Recipe)" << endl;
-            cout << "2. Add Recipe to Date (Date + Recipe only)" << endl;
-            cout << "3. View Plan for Date" << endl;
-            cout << "4. View Full Plan" << endl;
-            cout << "5. Display Shopping List" << endl;
-            cout << "6. Back to Main Menu" << endl;
+            cout << "2. View Plan for Date" << endl;
+            cout << "3. View Full Plan" << endl;
+            cout << "4. Display Shopping List" << endl;
+            cout << "5. Set Difficulty Constraint" << endl; // ⭐️ 추가된 메뉴 1
+            cout << "6. Generate Balanced Plan" << endl;    // ⭐️ 추가된 메뉴 2
+            cout << "7. Back to Main Menu" << endl;         // ⭐️ 번호 변경
             cout << "Select: ";
             
             cin >> choice;
@@ -411,37 +412,35 @@ public:
             }
             else if (choice == 2)
             {
-                string date, recipe;
-                int servings;
-                
-                cout << "Enter date (YYYY-MM-DD): ";
-                getline(cin, date);
-                
-                cout << "Enter recipe name: ";
-                getline(cin, recipe);
-                
-                cout << "Enter servings: ";
-                cin >> servings;
-                cin.ignore();
-                
-                planManager->addRecipeToDate(date, recipe, servings);
-            }
-            else if (choice == 3)
-            {
                 string date;
                 cout << "Enter date (YYYY-MM-DD): ";
                 getline(cin, date);
                 planManager->viewPlanForDate(date);
             }
-            else if (choice == 4)
+            else if (choice == 3)
             {
                 planManager->viewFullPlan();
             }
-            else if (choice == 5)
+            else if (choice == 4)
             {
                 planManager->displayShoppingList();
             }
+            // ⭐️ 추가된 로직 1: 난이도 제약 설정
+            else if (choice == 5)
+            {
+                char level;
+                cout << "Enter maximum difficulty level (A, B, C): ";
+                cin >> level;
+                cin.ignore(); // 버퍼 비우기
+                planManager->setDifficultyConstraint(level);
+            }
+            // ⭐️ 추가된 로직 2: 자동 계획 생성
             else if (choice == 6)
+            {
+                planManager->generateBalancedPlan();
+            }
+            // ⭐️ 번호가 변경된 '뒤로 가기'
+            else if (choice == 7)
             {
                 cout << "Returning to main menu..." << endl;
                 break;

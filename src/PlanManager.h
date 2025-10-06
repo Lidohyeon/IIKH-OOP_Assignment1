@@ -11,6 +11,8 @@
 #include "Recipe.h"
 #include <iomanip> // 1. <iomanip> 헤더를 추가 10-05 pm10:45
 #include <sstream> // 1. stringstream 사용 위해 추가 10-05 pm10:45
+#include <cstdlib> // ⭐️ rand, srand 함수 사용을 위해 추가
+#include <ctime>   // ⭐️ time 함수 사용을 위해 추가
 
 using namespace std;
 
@@ -243,39 +245,6 @@ public:
 }
     
     /**
-     * 🆕 편의 메소드 2: 날짜 + 레시피 이름 (끼니 구분 없음)
-     * 
-     * 끼니 타입 없이 "2024-10-05에 김치찌개" 추가
-     */
-    void addRecipeToDate(const string& dateStr, 
-                         const string& recipeName, 
-                         int servings = 1)
-    {
-        if (recipeDB == nullptr) {
-            cout << "❌ Error: RecipeDatabase not connected!" << endl;
-            return;
-        }
-        
-        bool found = false;
-        
-        if (mealPlan.find(dateStr) != mealPlan.end()) {
-            for (Meal& meal : mealPlan[dateStr]) {
-                if (meal.getMealType() == "Meal") {
-                    meal.addRecipe(*recipeDB, recipeName);
-                    found = true;
-                    break;
-                }
-            }
-        }
-        
-        if (!found) {
-            Meal newMeal("Meal", servings);
-            newMeal.addRecipe(*recipeDB, recipeName);
-            mealPlan[dateStr].push_back(newMeal);
-        }
-    }
-    
-    /**
      * 🆕 편의 메소드 3: 여러 레시피 한번에 추가
      */
     void addMultipleRecipesToMeal(const string& dateStr,
@@ -369,32 +338,95 @@ public:
     
     /**
      * 전체 계획 기간에 대해 자동으로 식사 배정
-     * 
+     *
      * 배정 전략:
      * - 아침: C 난이도 (쉬운 것)
      * - 점심: C 또는 B 혼합
      * - 저녁: B 또는 A (시간 여유)
+     * - 모든 배정은 사용자가 설정한 최대 난이도(maxDifficultyLevel) 제약을 따름
      */
     void generateBalancedPlan()
     {
         cout << "\n===== Generating Balanced Meal Plan =====" << endl;
-        cout << "Period: " << startDate.toString() << " to " 
+        cout << "Period: " << startDate.toString() << " to "
              << endDate.toString() << endl;
         cout << "Max difficulty constraint: " << getDifficultyDescription(maxDifficultyLevel) << endl;
-        
+
         if (recipeDB == nullptr) {
             cout << "❌ Cannot generate plan: RecipeDatabase not connected" << endl;
             return;
         }
+
+        // 1. 난이도별로 레시피 목록을 미리 분류합니다. (사용자 제약 조건 반영)
+        vector<Recipe> easyRecipes, mediumRecipes, hardRecipes;
+        for (const auto& recipe : recipeDB->getRecipes()) {
+            switch (recipe.getDifficulty()) {
+                case Difficulty::C:
+                    easyRecipes.push_back(recipe);
+                    break;
+                case Difficulty::B:
+                    if (maxDifficultyLevel != Difficulty::C)
+                        mediumRecipes.push_back(recipe);
+                    break;
+                case Difficulty::A:
+                    if (maxDifficultyLevel == Difficulty::A)
+                        hardRecipes.push_back(recipe);
+                    break;
+            }
+        }
+        
+        // 각 끼니에 사용할 수 있는 레시피 목록 준비
+        vector<Recipe> breakfastPool = easyRecipes;
+        vector<Recipe> lunchPool;
+        lunchPool.insert(lunchPool.end(), easyRecipes.begin(), easyRecipes.end());
+        lunchPool.insert(lunchPool.end(), mediumRecipes.begin(), mediumRecipes.end());
+        vector<Recipe> dinnerPool;
+        dinnerPool.insert(dinnerPool.end(), mediumRecipes.begin(), mediumRecipes.end());
+        dinnerPool.insert(dinnerPool.end(), hardRecipes.begin(), hardRecipes.end());
+
+        // 2. 레시피가 충분한지 확인합니다.
+        if (breakfastPool.empty() || lunchPool.empty() || dinnerPool.empty()) {
+            cout << "❌ Cannot generate plan: Not enough recipes for each meal type within the difficulty constraint." << endl;
+            if(breakfastPool.empty()) cout << "   - No easy recipes for breakfast." << endl;
+            if(lunchPool.empty()) cout << "   - No easy/medium recipes for lunch." << endl;
+            if(dinnerPool.empty()) cout << "   - No medium/hard recipes for dinner." << endl;
+            return;
+        }
         
         cout << "\n📝 Balanced Plan Strategy:" << endl;
-        cout << "   - Breakfast: C difficulty (Easy - quick morning meals)" << endl;
-        cout << "   - Lunch: B or C difficulty (Medium-Easy - energy boost)" << endl;
-        cout << "   - Dinner: A or B difficulty (Hard-Medium - time available)" << endl;
+        cout << "   - Breakfast: C difficulty (Easy)" << endl;
+        cout << "   - Lunch: B or C difficulty (Medium-Easy)" << endl;
+        cout << "   - Dinner: A or B difficulty (Hard-Medium)" << endl;
         cout << "   (All within your constraint: " << getDifficultyDescription(maxDifficultyLevel) << ")\n" << endl;
+
+        // 3. 시작일부터 종료일까지 하루씩 반복하며 계획 생성
+        srand(time(0)); // 매번 다른 결과를 위해 난수 시드 초기화
+        Date currentDate = startDate;
+        while (currentDate <= endDate) {
+            string dateStr = currentDate.toString().substr(0, 10); // "YYYY-MM-DD" 부분만 추출
+            
+            cout << "🗓️ Generating plan for " << dateStr << "..." << endl;
+            
+            // 해당 날짜의 기존 계획을 초기화
+            mealPlan[dateStr].clear();
+
+            // 아침: 쉬움(C) 레시피 중 무작위 선택
+            string breakfastRecipe = breakfastPool[rand() % breakfastPool.size()].getTitle();
+            addRecipeToMeal(dateStr, "Breakfast", breakfastRecipe, 1);
+
+            // 점심: 쉬움(C) 또는 보통(B) 레시피 중 무작위 선택
+            string lunchRecipe = lunchPool[rand() % lunchPool.size()].getTitle();
+            addRecipeToMeal(dateStr, "Lunch", lunchRecipe, 1);
+            
+            // 저녁: 보통(B) 또는 어려움(A) 레시피 중 무작위 선택
+            string dinnerRecipe = dinnerPool[rand() % dinnerPool.size()].getTitle();
+            addRecipeToMeal(dateStr, "Dinner", dinnerRecipe, 1);
+            
+            // 다음 날짜로 이동
+            currentDate.incrementDay();
+        }
         
-        cout << "[Auto plan generation will be implemented here]" << endl;
-        cout << "[Requires: Date increment logic to iterate from start to end]" << endl;
+        cout << "\n✅ Balanced meal plan generated successfully!" << endl;
     }
     
     // ==================== 계획 조회 기능 ====================
@@ -403,27 +435,21 @@ public:
      * 특정 날짜의 식사 계획 조회
      */
     void viewPlanForDate(const string& dateStr) const
-{
-    auto it = mealPlan.find(dateStr);
-    
-    if (it == mealPlan.end() || it->second.empty()) {
-        cout << "No meal plan found for " << dateStr << endl;
-        return;
-    }
-    
-    cout << "\n===== Meal Plan for " << dateStr << " =====" << endl;
-    for (size_t i = 0; i < it->second.size(); i++)
     {
-        // 🚨 수정 필요: 현재 Meal 객체를 가져옵니다.
-        const Meal& meal = it->second[i];
+        auto it = mealPlan.find(dateStr);
         
-        // [Meal #N] 대신 [Breakfast] 또는 [Dinner] 출력
-        cout << "\n[" << meal.getMealType() << "]" << endl; 
+        if (it == mealPlan.end() || it->second.empty()) {
+            cout << "No meal plan found for " << dateStr << endl;
+            return;
+        }
         
-        // Meal 객체의 display() 호출
-        meal.display(); 
+        cout << "\n===== Meal Plan for " << dateStr << " =====" << endl;
+        for (const Meal& meal : it->second)
+        {
+            // ⭐️ 핵심 변경점: meal.display() 대신 meal.displaySummary() 호출
+            meal.displaySummary(); 
+        }
     }
-}
     
     /**
      * 전체 기간의 식사 계획 요약 출력
