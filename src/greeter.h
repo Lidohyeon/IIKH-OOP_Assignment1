@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <algorithm>
 #include <random>
+#include <ctime>
 #include "RecipeDatabase.h" // 데이터베이스 클래스를 사용하기 위해 포함
 #include "PlanManager.h"
 #include "Date.h"
@@ -19,7 +20,7 @@ class Greeter
 {
 private:
     RecipeDatabase &db;          // 데이터베이스 객체에 대한 '참조'
-    PlanManager *planManager;        // PlanManager 객체에 대한 포인터
+    PlanManager *planManager;    // PlanManager 객체에 대한 포인터
     std::vector<Date> schedules; // 일정을 저장할 벡터
 
     //===== Private Helper Functions (UI 처리) =====
@@ -79,15 +80,29 @@ private:
     {
         db.sortRecipe(); // 데이터베이스 객체에게 정렬을 요청
         cout << "Recipes have been sorted." << endl;
-        //db.displayAll(); 
-        // 정렬된 결과를 보여줌을 없앴습니다.sort 할 때 안나올겁니다! 10-05 pm10:45
+        // db.displayAll();
+        //  정렬된 결과를 보여줌을 없앴습니다.sort 할 때 안나올겁니다! 10-05 pm10:45
     }
 
 public:
     // 생성자: 사용할 데이터베이스를 외부에서 받음
-    Greeter(RecipeDatabase &database) : db(database) {
-        planManager = new PlanManager();          
-        planManager->setRecipeDatabase(&db);       
+    Greeter(RecipeDatabase &database) : db(database)
+    {
+        // 현재 시간 가져오기
+        time_t now = time(0);
+        tm *ltm = localtime(&now);
+
+        // 현재 날짜 Date 객체 생성
+        Date startDate(1900 + ltm->tm_year, 1 + ltm->tm_mon, ltm->tm_mday, 0, 0, "Plan Start");
+
+        // 1주일 후 날짜 계산
+        time_t oneWeekLater = now + (7 * 24 * 60 * 60); // 7일 * 24시간 * 60분 * 60초
+        tm *endTm = localtime(&oneWeekLater);
+        Date endDate(1900 + endTm->tm_year, 1 + endTm->tm_mon, endTm->tm_mday, 23, 59, "Plan End");
+
+        // PlanManager 생성 (시작날짜, 종료날짜 전달)
+        planManager = new PlanManager(startDate, endDate);
+        planManager->setRecipeDatabase(&db);
     }
 
     // 메인 메뉴 실행 함수
@@ -132,8 +147,8 @@ public:
                 mealMenu();
                 break;
             case 10:
-                planManagerMenu();  // Plan Manager 추가
-                break;    
+                planManagerMenu(); // Plan Manager 추가
+                break;
             case 11:
                 cout << "Saving and exiting..." << endl;
                 db.saveToFile();
@@ -374,7 +389,7 @@ public:
     void planManagerMenu()
     {
         int choice;
-        
+
         while (true)
         {
             cout << "\n===== Plan Manager =====" << endl;
@@ -385,45 +400,45 @@ public:
             cout << "5. Display Shopping List" << endl;
             cout << "6. Back to Main Menu" << endl;
             cout << "Select: ";
-            
+
             cin >> choice;
             cin.ignore();
-            
+
             if (choice == 1)
             {
                 string date, mealType, recipe;
                 int servings;
-                
+
                 cout << "Enter date (YYYY-MM-DD): ";
                 getline(cin, date);
-                
+
                 cout << "Enter meal type (Breakfast/Lunch/Dinner): ";
                 getline(cin, mealType);
-                
+
                 cout << "Enter recipe name: ";
                 getline(cin, recipe);
-                
+
                 cout << "Enter servings: ";
                 cin >> servings;
                 cin.ignore();
-                
+
                 planManager->addRecipeToMeal(date, mealType, recipe, servings);
             }
             else if (choice == 2)
             {
                 string date, recipe;
                 int servings;
-                
+
                 cout << "Enter date (YYYY-MM-DD): ";
                 getline(cin, date);
-                
+
                 cout << "Enter recipe name: ";
                 getline(cin, recipe);
-                
+
                 cout << "Enter servings: ";
                 cin >> servings;
                 cin.ignore();
-                
+
                 planManager->addRecipeToDate(date, recipe, servings);
             }
             else if (choice == 3)
