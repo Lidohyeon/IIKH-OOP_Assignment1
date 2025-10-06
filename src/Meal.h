@@ -106,6 +106,24 @@ class Meal {
         }
     }
 
+    void displaySummary() const
+    {
+        // [Breakfast] (1 servings) 와 같은 형식으로 출력
+        cout << "[" << mealType << "] (" << servings << " servings)" << endl;
+        if(recipes.empty())
+        {
+            cout << "  (No recipe assigned)" << endl;
+        }
+        else
+        {
+            for(const auto& r : recipes)
+            {
+                //   - 김치찌개
+                cout << "  - " << r.getTitle() << endl;
+            }
+        }
+    }
+
     //getter
     string getMealType() const { return mealType; }
     int getServings() const { return servings; }
