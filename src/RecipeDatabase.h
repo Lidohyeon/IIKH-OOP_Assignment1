@@ -2,13 +2,13 @@
 #ifndef RECIPE_DATABASE_H
 #define RECIPE_DATABASE_H
 
-#include <vector>
-#include <string>
-#include <fstream>
-#include <sstream>
-#include <algorithm>
-#include <limits>
-#include "Recipe.h" // Recipe 클래스 헤더 포함
+#include <vector>      // std::vector: 동적으로 크기가 조절되는 배열을 사용하기 위해 포함합니다. 레시피 목록을 저장하는 데 사용됩니다.
+#include <string>      // std::string: 문자열을 다루는 클래스를 사용하기 위해 포함합니다. 레시피의 제목, 재료 이름 등을 저장합니다.
+#include <fstream>     // std::ifstream, std::ofstream: 파일 입출력(읽기/쓰기)을 위해 포함합니다. 레시피를 파일에 저장하고 불러오는 데 사용됩니다.
+#include <sstream>     // std::istringstream: 문자열을 스트림처럼 다루기 위해 포함합니다. 문자열을 특정 구분자로 분리(파싱)할 때 유용합니다.
+#include <algorithm>   // std::transform, std::sort, std::remove_if 등 범용 알고리즘 함수를 사용하기 위해 포함합니다.
+#include <limits>      // std::numeric_limits: 특정 타입의 최대값 등 숫자 한계에 대한 정보를 얻기 위해 포함합니다. 입력 버퍼를 비울 때 사용됩니다.
+#include "Recipe.h"    // Recipe 클래스 헤더 포함합니다.
 
 using namespace std;
 
@@ -20,6 +20,12 @@ private:
 
     // --- Private Helper Functions ---
 
+    /*
+     * string trim(const string &str): 문자열의 시작과 끝에 있는 공백(스페이스, 탭, 개행 등)을 제거합니다.
+     * param str 원본 문자열
+     * string::find_first_not_of와 string::find_last_not_of를 사용하여 공백이 아닌 첫 문자와 마지막 문자의 위치를 찾습니다.
+     * return 공백이 제거된 새로운 문자열
+     */
     // 문자열 좌우 공백 제거 헬퍼 함수
     string trim(const string &str)
     {
@@ -30,6 +36,13 @@ private:
         return str.substr(first, (last - first + 1));
     }
 
+    /*
+     * vector<string> split(const string &s, char delimiter): 주어진 구분자(delimiter)를 기준으로 문자열을 분리하여 vector<string>에 담아 반환합니다.
+     * param s 분리할 원본 문자열
+     * param delimiter 구분자 문자
+     * istringstream을 사용해 문자열을 스트림으로 만들고, getline 함수로 구분자가 나올 때까지 문자열을 읽어와 벡터에 추가합니다.
+     * return 분리된 문자열들의 벡터
+    */
     // 문자열 분리 헬퍼 함수
     vector<string> split(const string &s, char delimiter)
     {
@@ -43,6 +56,13 @@ private:
         return tokens;
     }
 
+
+    /*
+     * static string toLower(const string &str): 문자열 전체를 소문자로 변환합니다. 대소문자 구분 없는 검색을 위해 사용됩니다.
+     * param str 원본 문자열
+     * details: algorithm 헤더의 transform 함수를 사용하여 문자열의 각 문자에 tolower 함수를 적용합니다.
+     * return 모두 소문자로 변환된 새로운 문자열
+     */
     static string toLower(const string &str)
     {
         string lower_str = str;
@@ -52,9 +72,12 @@ private:
         return lower_str;
     }
 
-    // Difficulty enum을 문자열로 변환하는 헬퍼 함수
-    // 클래스 상태에 접근하지 않으므로 static으로 선언하는 것이 좋음
-    // 'Grade'를 Difficulty enum으로 변환
+    /*
+     * static Difficulty stringToDifficulty(const string &s): 난이도를 나타내는 문자열("A", "B", "C")을 Difficulty 열거형(enum)으로 변환합니다.
+     * param s 난이도 문자열
+     * details: static 함수인 이유: 특정 RecipeDatabase 객체의 상태(recipes, filename)와 무관하게 동작하므로 static으로 선언하는 것이 효율적입니다.
+     * return 변환된 Difficulty enum 값
+     */
     static Difficulty stringToDifficulty(const string &s)
     {
         string lower_s = toLower(s);
@@ -84,8 +107,14 @@ private:
     }
 
 public:
-
-    // [수정됨] Ingredients 문자열을 파싱하여 vector<Ingredient>로 반환
+    /**
+     * vector<Ingredient> parseIngredients(const string& value): "이름|양|단위,이름|양|단위" 형식의 재료 문자열을 파싱하여 vector<Ingredient> 객체로 변환합니다.
+     * param value 파싱할 재료 정보 문자열
+     * details: 먼저 ','를 기준으로 각 재료를 분리하고, 다시 '|'를 기준으로 이름, 양, 단위를 분리하여 Ingredient 객체를 생성합니다.
+     * stod (string to double) 함수를 사용하며, 숫자로 변환할 수 없는 경우를 대비해 try-catch로 예외 처리를 합니다.
+     * return 파싱된 재료 객체들의 벡터
+     */
+    // Ingredients 문자열을 파싱하여 vector<Ingredient>로 반환
     vector<Ingredient> parseIngredients(const string& value) {
         vector<string> ingredientStrings = split(value, ',');
         vector<Ingredient> newIngredients;
@@ -105,10 +134,19 @@ public:
         }
         return newIngredients;
     }
+    
+    
     // --- 파일 입출력 ---
 
+    /*
+     * bool loadFromFile(const string& filename): 지정된 파일로부터 레시피 데이터를 읽어와 `recipes` 벡터를 채웁니다.
+     * param filename 읽어올 파일의 경로 및 이름
+     * details: 멀티라인으로 구성된 레시피 형식을 파싱합니다. 'Recipe Procedure' 섹션을 읽을 때는 상태(isReadingProcedure)를 관리하며,
+     * 'Recipe name' 키워드가 나오면 이전까지 읽은 정보를 바탕으로 레시피 객체를 생성하고 저장합니다.
+     * return 파일을 성공적으로 읽어왔으면 true, 실패했으면 false를 반환합니다.
+     */
     // 새로운 멀티라인 포맷을 처리하는 파싱 함수
-    // [수정됨] 새로운 Ingredient 파싱 로직 적용 10-05 pm10:45
+    // 새로운 Ingredient 파싱 로직 적용 
     bool loadFromFile(const string& filename) {
         this->filename = filename;
         ifstream file(filename);
@@ -121,6 +159,7 @@ public:
         Difficulty currentDifficulty = Difficulty::A;
         bool isReadingProcedure = false;
 
+        // 람다(lambda) 함수: 현재까지 파싱된 정보로 레시피 객체를 생성하고 벡터에 추가하는 로직을 캡슐화합니다.
         auto createAndStoreRecipe = [&]() {
             if (!currentTitle.empty()) {
                 recipes.emplace_back(currentTitle, trim(currentProcedure), currentTime, currentIngredient, currentDifficulty);
@@ -130,6 +169,7 @@ public:
             }
         };
 
+        // fstream 헤더의 getline 함수: 파일에서 한 줄씩 읽어옵니다.
         while (getline(file, line)) {
             string trimmed_line = trim(line);
             if (isReadingProcedure) {
@@ -169,8 +209,12 @@ public:
         return true;
     }
 
-    // [수정] 'Grade' 형식으로 저장하는 함수
-    // [수정됨] 새로운 Ingredient 형식으로 저장 10-05 pm10:45
+    /*
+     * bool saveToFile() const: 현재 `recipes` 벡터에 있는 모든 레시피 데이터를 파일에 저장합니다.
+     * return 파일 저장 성공 시 true, 실패 시 false
+     */
+    
+    // 'Grade' 형식으로 저장하는 함수
     bool saveToFile() const {
         ofstream file(filename);
         if (!file.is_open()) return false;
@@ -196,8 +240,10 @@ public:
 
     // --- 5대 핵심 기능 ---
 
-    // [수정] 'Grade'를 입력받도록 변경
-    // [수정됨] '이름|양|단위' 형식으로 입력받도록 변경 10-05 pm10:45
+    /*
+     * void insertRecipe(): 사용자로부터 새로운 레시피 정보를 입력받아 데이터베이스에 추가합니다.
+     * details: 여러 줄로 된 조리 절차를 입력받기 위해 빈 줄이 입력될 때까지 getline을 반복 사용합니다.
+     */
     void insertRecipe() {
         string title, procedure, timeStr, ingredientsLine, gradeStr;
         cout << "Enter recipe title: ";
@@ -224,8 +270,10 @@ public:
         cout << "\nRecipe '" << title << "' added successfully!" << endl;
     }
 
-    // [수정] 대소문자 미구분 검색 기능
-    // [수정됨] Ingredient의 name 필드에서 검색 가능하도록 변경 10-05 pm10:45
+    /*
+     * void searchRecipe() const: 사용자로부터 키워드를 입력받아 레시피 제목 또는 재료 이름에 해당 키워드가 포함된 모든 레시피를 검색하고 출력합니다.
+     * details: 대소문자를 구분하지 않고 검색하기 위해 toLower 헬퍼 함수를 사용합니다.
+     */
     void searchRecipe() const {
         cout << "Enter keyword to search for (case-insensitive): ";
         string keyword;
@@ -236,13 +284,14 @@ public:
         cout << "\n--- Search Results ---\n";
 
         for (const auto& recipe : recipes) {
+            // string::npos: find 함수가 문자열을 찾지 못했을 때 반환하는 특별한 값
             bool foundInThisRecipe = (toLower(recipe.getTitle()).find(lowerKeyword) != string::npos);
 
             if (!foundInThisRecipe) {
                 for (const auto& ingredient : recipe.getIngredient()) {
                     if (toLower(ingredient.name).find(lowerKeyword) != string::npos) {
                         foundInThisRecipe = true;
-                        break;
+                        break; // 재료에서 찾았으면 더 이상 탐색할 필요 없음
                     }
                 }
             }
@@ -257,12 +306,19 @@ public:
         }
     }
 
+    /*
+     * void deleteRecipe(): 사용자로부터 제목을 입력받아 일치하는 레시피를 데이터베이스에서 삭제합니다.
+     * details: C++의 'Erase-Remove Idiom'을 사용합니다.
+     * 1. remove_if: 삭제할 조건에 맞는 원소들을 벡터의 뒤쪽으로 모두 옮기고, 유효한 원소들의 끝을 가리키는 반복자(iterator)를 반환합니다. (실제 삭제는 아님)
+     * 2. erase: remove_if가 반환한 위치부터 벡터의 실제 끝까지의 원소들을 한 번에 삭제합니다.
+     */
     void deleteRecipe()
     {
         cout << "Enter title of the recipe to delete: ";
         string title;
         getline(cin, title);
 
+        // 람다 함수 `[&](...) { ... }`: 삭제할 조건을 정의하는 함수 객체를 즉석에서 만듭니다. `[&]`는 외부 변수(title)를 참조로 캡처합니다.
         auto it = remove_if(recipes.begin(), recipes.end(), [&](const Recipe &recipe)
                             { return recipe.getTitle() == title; });
 
@@ -277,6 +333,10 @@ public:
         }
     }
 
+    /**
+     * void sortRecipe(): `recipes` 벡터를 레시피 제목의 가나다/알파벳 순으로 정렬합니다.
+     * details: algorithm 헤더의 sort 함수를 사용합니다. 정렬 기준은 람다 함수로 제공합니다.
+     */
     void sortRecipe()
     {
         sort(recipes.begin(), recipes.end(), [](const Recipe &a, const Recipe &b)
@@ -284,7 +344,11 @@ public:
         cout << "Recipes have been sorted by title." << endl;
     }
 
-    // [수정됨] '이름|양|단위' 형식으로 수정하도록 변경 10-05 pm10:45
+    /*
+     * void editRecipe(): 사용자로부터 제목을 입력받아 특정 레시피의 정보를 수정합니다.
+     * details: cin으로 숫자를 입력받은 후 getline으로 문자열을 입력받기 전에 입력 버퍼에 남아있는 개행 문자를 제거해야 합니다.
+     * `cin.ignore(numeric_limits<streamsize>::max(), '\n');` 코드가 이 역할을 합니다.
+     */
     void editRecipe() {
         cout << "Enter title of the recipe to edit: ";
         string title;
