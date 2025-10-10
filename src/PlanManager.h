@@ -54,6 +54,9 @@ private:
     // RecipeDatabase 객체 포인터 (필수 협력자!)
     RecipeDatabase *recipeDB;
 
+    // Greeter의 schedules 벡터에 대한 참조 (일정 공유)
+    vector<Date> *sharedSchedules;
+
 public:
     // ==================== 생성자 및 소멸자 ====================
 
@@ -61,10 +64,11 @@ public:
      * 기본 생성자
      * 기본값: 난이도 Difficulty::A (모든 난이도 허용)
      */
-    PlanManager() : maxDifficultyLevel(Difficulty::A), recipeDB(nullptr)
+    PlanManager() : maxDifficultyLevel(Difficulty::A), recipeDB(nullptr), sharedSchedules(nullptr)
     {
         cout << "PlanManager initialized (Default max difficulty: A - All levels allowed)" << endl;
         cout << "⚠️ RecipeDatabase not connected. Call setRecipeDatabase()." << endl;
+        cout << "⚠️ Shared schedules not connected. Call setSharedSchedules()." << endl;
     }
 
     /**
@@ -74,10 +78,12 @@ public:
         : startDate(start), endDate(end), maxDifficultyLevel(charToDifficulty(diffLevel))
     {
         recipeDB = nullptr;
+        sharedSchedules = nullptr;
         cout << "PlanManager created from " << start.toString()
              << " to " << end.toString() << endl;
         cout << "Max difficulty: " << diffLevel << endl;
         cout << "⚠️ RecipeDatabase not connected. Call setRecipeDatabase()." << endl;
+        cout << "⚠️ Shared schedules not connected. Call setSharedSchedules()." << endl;
     }
 
     ~PlanManager()
@@ -142,6 +148,23 @@ public:
         else
         {
             cout << "⚠️ RecipeDatabase set to null" << endl;
+        }
+    }
+
+    /**
+     * 공유 스케줄 설정 (Greeter의 schedules와 연동)
+     */
+    void setSharedSchedules(vector<Date> *schedules)
+    {
+        sharedSchedules = schedules;
+        if (schedules != nullptr)
+        {
+            cout << "✅ Shared schedules connected to PlanManager" << endl;
+            cout << "   Current schedules: " << schedules->size() << " items" << endl;
+        }
+        else
+        {
+            cout << "⚠️ Shared schedules set to null" << endl;
         }
     }
 
@@ -491,24 +514,95 @@ public:
         }
     }
     /**
-     * 전체 기간의 식사 계획 요약 출력
+     * 전체 기간의 식사 계획 요약 출력 (스케줄 정보 포함)
      */
     void viewFullPlan() const
     {
+        cout << "\n===== Full Plan Summary (Meals + Schedules) =====" << endl;
+
+        // 식사 계획 출력
         if (mealPlan.empty())
         {
-            cout << "No meal plans created yet." << endl;
-            return;
+            cout << "📅 Meal Plans: None created yet." << endl;
+        }
+        else
+        {
+            cout << "📅 Meal Plans: " << mealPlan.size() << " days planned" << endl;
+            cout << "Difficulty constraint: " << getDifficultyDescription(maxDifficultyLevel) << endl;
+
+            for (const auto &dayPlan : mealPlan)
+            {
+                cout << "   🍽️  " << dayPlan.first << " - "
+                     << dayPlan.second.size() << " meal(s)" << endl;
+            }
         }
 
-        cout << "\n===== Full Meal Plan Summary =====" << endl;
-        cout << "Total planned days: " << mealPlan.size() << endl;
-        cout << "Difficulty constraint: " << getDifficultyDescription(maxDifficultyLevel) << endl;
-
-        for (const auto &dayPlan : mealPlan)
+        // 공유 스케줄 출력
+        if (sharedSchedules == nullptr || sharedSchedules->empty())
         {
-            cout << "\n📅 " << dayPlan.first << " - "
-                 << dayPlan.second.size() << " meal(s)" << endl;
+            cout << "\n📋 Schedules: None available." << endl;
+        }
+        else
+        {
+            cout << "\n📋 Schedules: " << sharedSchedules->size() << " items" << endl;
+            for (size_t i = 0; i < sharedSchedules->size() && i < 5; i++) // 최대 5개만 미리보기
+            {
+                cout << "   📅 " << (*sharedSchedules)[i].toString() << endl;
+            }
+            if (sharedSchedules->size() > 5)
+            {
+                cout << "   ... and " << (sharedSchedules->size() - 5) << " more schedules" << endl;
+            }
+        }
+    }
+
+    /**
+     * 특정 날짜의 통합 정보 조회 (식사 계획 + 스케줄)
+     */
+    void viewIntegratedPlanForDate(const string &dateStr) const
+    {
+        cout << "\n===== Integrated Plan for " << dateStr << " =====" << endl;
+
+        // 1. 식사 계획 출력
+        auto mealIt = mealPlan.find(dateStr);
+        if (mealIt != mealPlan.end() && !mealIt->second.empty())
+        {
+            cout << "\n🍽️  Meal Plans:" << endl;
+            for (const Meal &meal : mealIt->second)
+            {
+                cout << "\n[" << meal.getMealType() << "]" << endl;
+                meal.display();
+            }
+        }
+        else
+        {
+            cout << "\n🍽️  Meal Plans: No meals planned for this date." << endl;
+        }
+
+        // 2. 해당 날짜의 스케줄 출력
+        if (sharedSchedules != nullptr && !sharedSchedules->empty())
+        {
+            bool foundSchedules = false;
+            cout << "\n📋 Schedules for " << dateStr << ":" << endl;
+
+            for (const Date &schedule : *sharedSchedules)
+            {
+                string scheduleDate = schedule.toString().substr(0, 10); // YYYY-MM-DD 부분만 추출
+                if (scheduleDate == dateStr)
+                {
+                    cout << "   📅 " << schedule.toString() << endl;
+                    foundSchedules = true;
+                }
+            }
+
+            if (!foundSchedules)
+            {
+                cout << "   No schedules for this date." << endl;
+            }
+        }
+        else
+        {
+            cout << "\n📋 Schedules: No schedule data available." << endl;
         }
     }
 

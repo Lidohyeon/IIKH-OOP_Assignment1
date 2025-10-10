@@ -103,6 +103,7 @@ public:
         // PlanManager 생성 (시작날짜, 종료날짜 전달)
         planManager = new PlanManager(startDate, endDate);
         planManager->setRecipeDatabase(&db);
+        planManager->setSharedSchedules(&schedules); // 스케줄 공유 설정
     }
 
     // 메인 메뉴 실행 함수
@@ -392,12 +393,13 @@ public:
         {
             std::cout << "\n===== Plan Manager =====" << std::endl;
             std::cout << "1. Add Recipe to Meal (Date + Meal Type + Recipe)" << std::endl;
-            std::cout << "2. View Plan for Date" << std::endl;
-            std::cout << "3. View Full Plan" << std::endl;
-            std::cout << "4. Display Shopping List" << std::endl;
-            std::cout << "5. Set Difficulty Constraint" << std::endl;
-            std::cout << "6. Generate Balanced Plan" << std::endl;
-            std::cout << "7. Back to Main Menu" << std::endl;
+            std::cout << "2. View Plan for Date (Meals only)" << std::endl;
+            std::cout << "3. View Integrated Plan for Date (Meals + Schedules)" << std::endl;
+            std::cout << "4. View Full Plan (All data)" << std::endl;
+            std::cout << "5. Display Shopping List" << std::endl;
+            std::cout << "6. Set Difficulty Constraint" << std::endl;
+            std::cout << "7. Generate Balanced Plan" << std::endl;
+            std::cout << "8. Back to Main Menu" << std::endl;
             std::cout << "Select: ";
 
             std::cin >> choice;
@@ -432,13 +434,20 @@ public:
             }
             else if (choice == 3)
             {
-                planManager->viewFullPlan();
+                string date;
+                std::cout << "Enter date (YYYY-MM-DD): ";
+                getline(std::cin, date);
+                planManager->viewIntegratedPlanForDate(date);
             }
             else if (choice == 4)
             {
-                planManager->displayShoppingList();
+                planManager->viewFullPlan();
             }
             else if (choice == 5)
+            {
+                planManager->displayShoppingList();
+            }
+            else if (choice == 6)
             {
                 char level;
                 std::cout << "Enter maximum difficulty level (A, B, C): ";
@@ -446,11 +455,11 @@ public:
                 std::cin.ignore();
                 planManager->setDifficultyConstraint(level);
             }
-            else if (choice == 6)
+            else if (choice == 7)
             {
                 planManager->generateBalancedPlan();
             }
-            else if (choice == 7)
+            else if (choice == 8)
             {
                 std::cout << "Returning to main menu..." << std::endl;
                 break;
