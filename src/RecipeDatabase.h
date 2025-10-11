@@ -349,41 +349,82 @@ public:
      * details: cin으로 숫자를 입력받은 후 getline으로 문자열을 입력받기 전에 입력 버퍼에 남아있는 개행 문자를 제거해야 합니다.
      * `cin.ignore(numeric_limits<streamsize>::max(), '\n');` 코드가 이 역할을 합니다.
      */
-    void editRecipe() {
-        cout << "Enter title of the recipe to edit: ";
-        string title;
-        getline(cin, title);
+    void editRecipe()
+{
+    cout << "Enter title of the recipe to edit: ";
+    string title;
+    getline(cin, title);
 
-        for (auto& recipe : recipes) {
-            if (recipe.getTitle() == title) {
-                cout << "Recipe found. Which part to edit?" << endl;
-                cout << "1. Title\n2. Procedure\n3. Time\n4. Ingredients\n5. Grade\n> ";
-                int choice;
-                cin >> choice;
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    for (auto &recipe : recipes)
+    {
+        if (toLower(recipe.getTitle()) == toLower(title)) // 대소문자 구분 없이 검색
+        {
+            cout << "Recipe found. Which part do you want to edit?" << endl;
+            cout << "1. Title\n2. Procedure\n3. Time\n4. Ingredients\n5. Grade\n> ";
+            int choice;
+            cin >> choice;
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-                switch (choice) {
-                    case 1: { /* ... */ break; }
-                    case 2: { /* ... */ break; }
-                    case 3: { /* ... */ break; }
-                    case 4: {
-                        cout << "Enter new ingredients (e.g., flour|1|cup, egg|2|ea): ";
-                        string input;
-                        getline(cin, input);
-                        recipe.setIngredient(parseIngredients(input));
-                        break;
-                    }
-                    case 5: { /* ... */ break; }
-                    default:
-                        cout << "Invalid choice. No changes made." << endl;
-                        return;
+            switch (choice)
+            {
+            case 1: {
+                cout << "Enter new title: ";
+                string input;
+                getline(cin, input);
+                recipe.setTitle(input);
+                break;
+            }
+
+            case 2: {
+                cout << "Enter new procedure (end with an empty line):\n";
+                string newProcedure;
+                string proc_line;
+                while (getline(cin, proc_line) && !proc_line.empty())
+                {
+                    newProcedure += proc_line + "\n";
                 }
-                cout << "Recipe updated successfully." << endl;
+                recipe.setProcedure(trim(newProcedure)); // 끝에 불필요한 공백 제거
+                break;
+            }
+
+            case 3: {
+                cout << "Enter new time (minutes): ";
+                string input;
+                getline(cin, input);
+                try {
+                    recipe.setTime(stoi(input)); // 문자열을 숫자로 변환
+                } catch (const std::exception& e) {
+                    cout << "Invalid number format. Time not updated." << endl;
+                }
+                break;
+            }
+
+            case 4: {
+                cout << "Enter new ingredients (e.g., flour|1|cup, egg|2|ea): ";
+                string input;
+                getline(cin, input);
+                recipe.setIngredient(parseIngredients(input));
+                break;
+            }
+
+            case 5: {
+                cout << "Enter new grade (A, B, C): ";
+                string input;
+                getline(cin, input);
+                recipe.setDifficulty(stringToDifficulty(input));
+                break;
+            }
+
+            default:
+                cout << "Invalid choice. No changes made." << endl;
                 return;
             }
+            cout << "Recipe updated successfully." << endl;
+            return;
         }
-        cout << "Recipe not found." << endl;
     }
+    cout << "Recipe not found." << endl;
+}
 
     void displayAll() const
     {

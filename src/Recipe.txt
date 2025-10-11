@@ -61,7 +61,7 @@ Time: 40
 Ingredients: brown lentils|1|cup, vegetable broth|4|cups, onion|1|ea, carrots|2|ea, celery|1|stalk, cumin|1|tsp, olive oil|1|tbsp
 Grade: C
 
-Recipe name: Pan-Seared Salmon
+Recipe name: Pan-Cooked Salmon
 Recipe Procedure:
 Step 1: Pat the salmon fillets completely dry with a paper towel. Season generously with salt and pepper.
 Step 2: Heat olive oil in a skillet over medium-high heat until it shimmers.
@@ -70,16 +70,5 @@ Step 4: Cook for 4-6 minutes, until the skin is very crispy and golden.
 Step 5: Flip the salmon and cook for another 2-4 minutes on the other side. Squeeze fresh lemon juice over the top before serving.
 Time: 12
 Ingredients: salmon fillet|2|ea, olive oil|1|tbsp, salt|0|to taste, pepper|0|to taste, lemon|1|ea
-Grade: C
-
-Recipe name: Spaghetti Aglio e Olio
-Recipe Procedure:
-Step 1: Cook spaghetti in heavily salted water until al dente.
-Step 2: While pasta cooks, gently sauté thinly sliced garlic in olive oil over low heat until fragrant.
-Step 3: Add a pinch of red pepper flakes to the oil.
-Step 4: Drain the pasta, reserving some pasta water, and toss it directly in the garlic oil.
-Step 5: Mix well, adding a splash of pasta water to create a sauce. Garnish with fresh parsley.
-Time: 15
-Ingredients: spaghetti|200|g, olive oil|0.25|cup, garlic|4|cloves, red pepper flakes|0.5|tsp, parsley|0|for garnish
 Grade: C
 
